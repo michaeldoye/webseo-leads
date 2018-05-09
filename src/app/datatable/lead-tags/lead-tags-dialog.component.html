@@ -1,0 +1,20 @@
+<mat-toolbar mat-dialog-title>
+  <span>Lead Tags</span>
+  <span fxFlex></span>
+  <button mat-icon-button matTooltip="Close" mat-dialog-close>
+    <mat-icon matListIcon aria-label="menu">close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div mat-dialog-content>
+  <mat-selection-list #tags [(ngModel)]="selectedTags" (ngModelChange)="addTagToLead(tags, currentId)">
+    <mat-list-option *ngFor="let tag of allTags" [value]="tag">
+      {{tag}}
+      <mat-divider></mat-divider>
+    </mat-list-option>
+  </mat-selection-list>
+</div>
+
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+  <button mat-button mat-dialog-close cdkFocusInitial>Done</button>
+</div>

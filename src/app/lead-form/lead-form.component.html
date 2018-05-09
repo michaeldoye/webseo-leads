@@ -1,0 +1,19 @@
+<div>
+  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+
+    <mat-grid-list cols="2" rowHeight="90px">
+      <mat-grid-tile *ngFor="let question of questions" class="form-row"> 
+        <app-question [question]="question" [form]="form"></app-question>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <div class="form-row">
+      <button mat-button type="submit" [disabled]="!form.valid">Save</button>
+    </div>
+
+  </form>
+
+  <div *ngIf="payLoad" class="form-row">
+    <strong>Saved the following values</strong><br>{{payLoad}}
+  </div>
+</div>

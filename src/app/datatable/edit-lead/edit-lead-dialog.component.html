@@ -1,0 +1,17 @@
+<mat-toolbar mat-dialog-title>
+  <span>Lead Tags</span>
+  <span fxFlex></span>
+  <button mat-icon-button matTooltip="Close" mat-dialog-close>
+    <mat-icon matListIcon aria-label="menu">close</mat-icon>
+  </button>
+</mat-toolbar>
+
+
+<div mat-dialog-content>
+  <app-dynamic-form [questions]="formFeilds"></app-dynamic-form>
+</div>
+
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+  <button mat-button mat-dialog-close cdkFocusInitial>Done</button>
+</div>
+
