@@ -7,4 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  isDarkTheme: boolean = false;
+
+  changeTheme(): void {
+    this.isDarkTheme = !this.isDarkTheme;
+    // if (this.isDarkTheme) {
+    //     this.isDarkTheme = false;
+    // } else {
+    //     this.isDarkTheme = true;
+    // }
+  }    
 }

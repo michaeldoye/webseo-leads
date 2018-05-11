@@ -1,6 +1,8 @@
 <div class="grid-container">
-  <h1 class="mat-h1">Dashboard</h1>
-  <mat-grid-list cols="3" rowHeight="350px">
+  <button mat-fab class="add-lead" matTooltip="Add New Lead" (click)="openDialog()" color="primary">
+    <mat-icon aria-label="add">add</mat-icon>
+  </button>
+  <mat-grid-list cols="3" rowHeight="435px">
     <mat-grid-tile *ngFor="let card of cards" [colspan]="card.cols" [rowspan]="card.rows">
       <mat-card class="dashboard-card">
         <mat-card-header>
@@ -16,7 +18,7 @@
           </mat-card-title>
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
-          <datatable *ngIf="card.component == 'datatable'"></datatable>
+          <datatable [shouldRefresh]="doRefresh" *ngIf="card.component == 'datatable'"></datatable>
           <div *ngIf="card.component == ''">Card Content Here</div>
         </mat-card-content>
       </mat-card>

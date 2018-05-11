@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource, MatDialog, MatBottomSheet } from '@angular/material';
 import { DatatableDataSource } from './datatable-datasource';
 import { LeadsService, Leads } from '../leads.service';
@@ -10,7 +10,9 @@ import { DataTableBottomSheet } from './bottom-sheet/data-table-bottom-sheet.com
   templateUrl: './datatable.component.html',
   styleUrls: ['./datatable.component.css']
 })
-export class DatatableComponent implements OnInit {
+export class DatatableComponent implements OnInit, OnChanges {
+
+  @Input() shouldRefresh: boolean;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -24,6 +26,11 @@ export class DatatableComponent implements OnInit {
 
   constructor(private api: LeadsService, public dialog: MatDialog, private bottomSheet: MatBottomSheet) {
     this.dataSource = new MatTableDataSource();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes.firstChange) return;
+    this.getTableData();
   }
 
   ngOnInit(): void {
@@ -47,7 +54,7 @@ export class DatatableComponent implements OnInit {
 
   openDialog(rowData: Leads): void {
     let dialogRef = this.dialog.open(DataTableDialogComponent, {
-      width: '650px',
+      width: '750px',
       data: {data: rowData}
     });
   }

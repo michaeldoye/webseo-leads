@@ -1,3 +1,4 @@
+<loading-overlay [isLoading]="isLoading"></loading-overlay>
 <div>
   <form (ngSubmit)="onSubmit()" [formGroup]="form">
 
@@ -8,12 +9,8 @@
     </mat-grid-list>
 
     <div class="form-row">
-      <button mat-button type="submit" [disabled]="!form.valid">Save</button>
+      <button mat-raised-button color="primary" style="width:100%" type="submit" [disabled]="!form.valid">Save</button>
     </div>
 
   </form>
-
-  <div *ngIf="payLoad" class="form-row">
-    <strong>Saved the following values</strong><br>{{payLoad}}
-  </div>
 </div>

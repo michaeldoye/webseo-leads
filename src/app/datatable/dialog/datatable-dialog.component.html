@@ -1,107 +1,127 @@
-<mat-toolbar mat-dialog-title>
-  <span>Lead Details for {{leadData.personName}}</span>&nbsp;<span *ngIf="leadData.personName">({{leadData.companyName}})</span>
+<mat-toolbar style="display:flex" mat-dialog-title>
+  <span>Lead Details for {{leadData.personName}}</span>&nbsp;<span *ngIf="leadData.companyName">({{leadData.companyName}})</span>
   <span fxFlex></span>
   <button mat-icon-button matTooltip="Close" mat-dialog-close>
     <mat-icon matListIcon aria-label="menu">close</mat-icon>
   </button>
 </mat-toolbar>
 
-<div mat-dialog-content>
-  <mat-list>
-    <mat-list-item>
-      <mat-icon matListIcon>update</mat-icon>
-      <h3 matLine> Current Status </h3>
-      <p matLine>
-        <span class="lead-status-text"> {{leadData.currentStatus ? leadData.currentStatus : 'Nothing to show'}} </span>
-      </p>
-    </mat-list-item>
-
-    <mat-divider></mat-divider>
-
-    <mat-list-item>
-      <mat-icon matListIcon>contact_mail</mat-icon>
-      <h3 matLine> Contact Email </h3>
-      <p matLine>
-        <span class="lead-status-text"> {{leadData.emailAddress ? leadData.emailAddress : 'Nothing to show'}} </span>
-      </p>
-    </mat-list-item>
-
-    <mat-divider></mat-divider>
+<div mat-dialog-content fxLayout="row" fxLayoutAlign="start center">
 
 
-    <mat-list-item>
-      <mat-icon matListIcon>contact_phone</mat-icon>
-      <h3 matLine> Contact Number </h3>
-      <p matLine>
-        <span class="lead-status-text"> {{leadData.contactNumber ? leadData.contactNumber : 'Nothing to show'}} </span>
-      </p>
-    </mat-list-item>
+  <div fxFlex="50%">
 
-    <mat-divider></mat-divider>
+    <mat-list>
+      <mat-list-item>
+        <mat-icon matListIcon>update</mat-icon>
+        <h3 matLine> Current Status </h3>
+        <p matLine [matTooltip]="leadData.currentStatus ? leadData.currentStatus : 'Nothing to show'">
+          <span class="lead-status-text">  {{leadData.currentStatus ? leadData.currentStatus : 'Nothing to show'}} </span>
+        </p>
+      </mat-list-item>
+  
+      <mat-divider></mat-divider>
+  
+      <mat-list-item>
+        <mat-icon matListIcon>contact_mail</mat-icon>
+        <h3 matLine> Contact Email </h3>
+        <p matLine>
+          <span class="lead-status-text"> {{leadData.emailAddress ? leadData.emailAddress : 'Nothing to show'}} </span>
+        </p>
+      </mat-list-item>
+  
+      <mat-divider></mat-divider>
+  
+      <mat-list-item>
+        <mat-icon matListIcon>contact_phone</mat-icon>
+        <h3 matLine> Contact Number </h3>
+        <p matLine>
+          <span class="lead-status-text"> {{leadData.contactNumber ? leadData.contactNumber : 'Nothing to show'}} </span>
+        </p>
+      </mat-list-item>
+  
+      <mat-divider></mat-divider>
+  
+      <mat-list-item>
+        <mat-icon matListIcon>web</mat-icon>
+        <h3 matLine> Website Address </h3>
+        <p matLine>
+          <span class="lead-status-text"> {{leadData.websiteAddress ? leadData.websiteAddress : 'Nothing to show'}} </span>
+        </p>
+      </mat-list-item> 
 
+      <mat-divider></mat-divider>
 
-    <mat-list-item>
-      <mat-icon matListIcon>web</mat-icon>
-      <h3 matLine> Website Address </h3>
-      <p matLine>
-        <span class="lead-status-text"> {{leadData.websiteAddress ? leadData.websiteAddress : 'Nothing to show'}} </span>
-      </p>
-    </mat-list-item>
+      <mat-list-item>
+        <mat-icon matListIcon>meeting_room</mat-icon>
+        <h3 matLine> Has Meeting </h3>
+        <p matLine>
+          <span class="lead-status-text"> {{leadData.hasMeeting ? leadData.hasMeeting : 'Nothing to show'}} </span>
+        </p>
+      </mat-list-item> 
 
-    <mat-divider></mat-divider> 
+      <mat-divider></mat-divider>      
 
-    <mat-list-item>
-      <mat-icon matListIcon>room_service</mat-icon>
-      <h3 matLine> Requested Services </h3>
-      <p matLine>
-        <span class="lead-status-text"> {{leadData.requestedServices ? leadData.requestedServices : 'Nothing to show'}} </span>
-      </p>
-    </mat-list-item>
+    </mat-list>   
 
-    <mat-divider></mat-divider> 
+  </div>
 
-    <mat-list-item>
-      <mat-icon matListIcon>input</mat-icon>
-      <h3 matLine> Source </h3>
-      <p matLine>
-        <span class="lead-status-text"> {{leadData.source ? leadData.source : 'Nothing to show'}} </span>
-      </p>
-    </mat-list-item>
+  <div fxFlex="50%">
+    <mat-list>
 
-    <mat-divider></mat-divider>     
+      <mat-list-item>
+        <mat-icon matListIcon>room_service</mat-icon>
+        <h3 matLine> Requested Services </h3>
+        <p matLine>
+          <span class="lead-status-text"> {{leadData.requestedServices ? leadData.requestedServices : 'Nothing to show'}} </span>
+        </p>
+      </mat-list-item>
+  
+      <mat-divider></mat-divider> 
+  
+      <mat-list-item>
+        <mat-icon matListIcon>input</mat-icon>
+        <h3 matLine> Source </h3>
+        <p matLine>
+          <span class="lead-status-text"> {{leadData.source ? leadData.source : 'Nothing to show'}} </span>
+        </p>
+      </mat-list-item>
+  
+      <mat-divider></mat-divider>     
+  
+      <mat-list-item>
+        <mat-icon matListIcon>perm_contact_calendar</mat-icon>
+        <h3 matLine> Lead Date </h3>
+        <p matLine>
+          <span class="lead-status-text"> {{leadData.leadDate ? leadData.leadDate : 'Nothing to show'}} </span>
+        </p>
+      </mat-list-item>
+  
+      <mat-divider></mat-divider>
+  
+      <mat-list-item>
+        <mat-icon matListIcon>send</mat-icon>
+        <h3 matLine> First Contact </h3>
+        <p matLine>
+          <span class="lead-status-text"> {{leadData.firstContact ? leadData.firstContact : 'Nothing to show'}} </span>
+        </p>
+      </mat-list-item>
+  
+      <mat-divider></mat-divider>
+  
+      <mat-list-item>
+        <mat-icon matListIcon>sentiment_very_satisfied</mat-icon>
+        <h3 matLine> Quoted Date </h3>
+        <p matLine>
+          <span class="lead-status-text"> {{leadData.quotedDate ? leadData.quotedDate : 'Nothing to show'}} </span>
+        </p>
+      </mat-list-item>
+  
+      <mat-divider></mat-divider>
+        
+    </mat-list>    
+  </div>
 
-    <mat-list-item>
-      <mat-icon matListIcon>perm_contact_calendar</mat-icon>
-      <h3 matLine> Lead Date </h3>
-      <p matLine>
-        <span class="lead-status-text"> {{leadData.leadDate ? leadData.leadDate : 'Nothing to show'}} </span>
-      </p>
-    </mat-list-item>
-
-    <mat-divider></mat-divider>
-
-    <mat-list-item>
-      <mat-icon matListIcon>send</mat-icon>
-      <h3 matLine> First Contact </h3>
-      <p matLine>
-        <span class="lead-status-text"> {{leadData.firstContact ? leadData.firstContact : 'Nothing to show'}} </span>
-      </p>
-    </mat-list-item>
-
-    <mat-divider></mat-divider>
-
-    <mat-list-item>
-      <mat-icon matListIcon>sentiment_very_satisfied</mat-icon>
-      <h3 matLine> Quoted Date </h3>
-      <p matLine>
-        <span class="lead-status-text"> {{leadData.quotedDate ? leadData.quotedDate : 'Nothing to show'}} </span>
-      </p>
-    </mat-list-item>
-
-    <mat-divider></mat-divider>
-     
-
-  </mat-list>
 </div>
 
 <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">

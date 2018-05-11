@@ -1,1 +1,25 @@
-<dashboard></dashboard>
+<div class="example-container" [class.light-blue-theme]="!isDarkTheme" [class.dark-theme]="isDarkTheme">
+  <mat-toolbar>
+    <span>Leads Dashboard</span>
+    <span fxFlex></span>
+    
+    <button *ngIf="isDarkTheme" 
+      matTooltip="Switch to light theme" 
+      matTooltipPosition="left" 
+      mat-icon-button 
+      (click)="changeTheme()">
+        <mat-icon>brightness_5</mat-icon>
+    </button>
+
+    <button *ngIf="!isDarkTheme" 
+      matTooltip="Switch to dark theme" 
+      matTooltipPosition="left"
+      mat-icon-button 
+      (click)="changeTheme()">
+        <mat-icon>brightness_3</mat-icon>
+    </button>
+
+  </mat-toolbar>  
+  <dashboard></dashboard>
+</div>
+

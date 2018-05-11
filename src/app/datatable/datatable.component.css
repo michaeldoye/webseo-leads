@@ -12,17 +12,24 @@ mat-footer-row, mat-header-row, mat-row {
 }
 
 .mat-row:hover {
-  background: #efefef;
+  background: rgba(239, 239, 239, 0.1803921568627451);
   cursor: pointer;
 }
 
 span.tag {
   border: 1px solid;
-  margin-right: 2px;
-  padding: 0px 3px;
+  margin-right: 5px;
+  padding: 2px 4px;
   color: #39739d;
   background-color: #E1ECF4;
-  border-color: transparent;  
+  border-color: transparent; 
+  font-size: 12px;
+  border-radius: 3px;
+  font-weight: 500; 
+}
+
+span.tag:hover {
+  opacity: 0.7;
 }
 
 .example-header {
@@ -33,4 +40,46 @@ span.tag {
 .mat-form-field {
   font-size: 14px;
   width: 100%;
+}
+
+span.tag.tag-have.contacted {
+  background: #4CAF50;
+  color: white;
+}
+
+span.tag.tag-to.contact {
+  background: #F44336;
+  color: white;
+}
+
+span.tag.tag-needs.info {
+  background: #FF9800;
+  color: white;
+}
+
+span.tag.tag-website {
+  background: #03A9F4;
+  color: white;
+}
+
+span.tag.tag-seo {
+  background: #9C27B0;
+  color: white;
+}
+
+span.tag.tag-ppc {
+  background: teal;
+  color: white;
+}
+
+
+span.tag.tag-social {
+  background: #ff0057;
+  color: white;
+}
+
+.delete-lead {
+  position: absolute;
+  top: 5px;
+  right: 50px;
 }

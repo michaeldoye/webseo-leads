@@ -19,8 +19,11 @@ export class LeadsService {
     return this.http.get<any>(`${this.api}/add/${tag}/${id}`);
   }
 
-  public dbGetLeadTags(id: number) {
-    
+  public dbGetLeadTags(id: number) {}
+
+  public saveNewLead(lead: Leads): Observable<any> {
+    lead.tags = 'test';
+    return this.http.get(`${this.api}/addnew/${JSON.stringify(lead)}`);
   }
 }
 
@@ -38,5 +41,6 @@ export interface Leads {
   quotedDate: string,
   requestedServices: string,
   currentStatus: string,
+  tags: string,
   isChecked?: boolean
 }

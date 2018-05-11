@@ -3,13 +3,14 @@ import { Injectable }       from '@angular/core';
 import { DropdownQuestion } from './question-dropdown';
 import { QuestionBase }     from './question-base';
 import { TextboxQuestion }  from './question-textbox';
+import { DateQuestion } from './question-date';
 
 @Injectable()
 export class QuestionService {
 
   // TODO: get from a remote source of question metadata
   // TODO: make asynchronous
-  getQuestions() {
+  getQuestions(data: any) {
 
     let questions: QuestionBase<any>[] = [
 
@@ -26,85 +27,101 @@ export class QuestionService {
       // }),
 
       new TextboxQuestion({
+        value: data.companyName || '',
         key: 'companyName',
         label: 'Company Name',
-        required: true,
-        order: 1
-      }),
-
-      new TextboxQuestion({
-        key: 'personName',
-        label: 'Person Name',
         required: true,
         order: 2
       }),
 
       new TextboxQuestion({
-        key: 'emailAddress',
-        label: 'Email Address',
-        type: 'email',
+        value: data.personName || '',
+        key: 'personName',
+        label: 'Person Name',
         required: true,
         order: 3
       }),
 
       new TextboxQuestion({
+        value: data.emailAddress || '',
+        key: 'emailAddress',
+        label: 'Email Address',
+        type: 'email',
+        required: false,
+        order: 5
+      }),
+
+      new TextboxQuestion({
+        value: data.emailAddress || '',
+        key: 'websiteAddress',
+        label: 'Webstie Address',
+        required: false,
+        order: 11
+      }),      
+
+      new TextboxQuestion({
+        value: data.contactNumber || '',
         key: 'contactNumber',
         label: 'Contact Number',
-        type: 'number',
-        required: true,
+        type: 'text',
+        required: false,
         order: 4
       }),     
       
       new TextboxQuestion({
+        value: data.requestedServices || '',
         key: 'requestedServices',
         label: 'Requested Services',
-        required: true,
-        order: 5
+        required: false,
+        order: 10
       }),
       
       new TextboxQuestion({
+        value: data.source || '',
         key: 'source',
         label: 'Source',
-        required: true,
+        required: false,
         order: 6
       }),       
 
       new TextboxQuestion({
+        value: data.leadDate || '',
         key: 'leadDate',
         label: 'Lead Date',
-        type: 'date',
-        required: true,
-        order: 7
+        required: false,
+        order: 1
       }),
 
       new TextboxQuestion({
+        value: data.firstContact || '',
         key: 'firstContact',
         label: 'First Contact Date',
-        type: 'date',
         required: false,
-        order: 8
+        order: 7        
       }),
       
       new TextboxQuestion({
+        value: data.hasMeeting || '',
         key: 'hasMeeting',
         label: 'Has Meeting',
-        required: true,
-        order: 9
+        required: false,
+        order: 8
       }), 
       
       new TextboxQuestion({
+        value: data.quotedDate || '',
         key: 'quotedDate',
         label: 'Quoted Date',
-        type: 'date',
         required: false,
-        order: 10
+        order: 9
       }), 
       
       new TextboxQuestion({
+        value: data.currentStatus || '',
         key: 'currentStatus',
         label: 'Current Status',
-        required: true,
-        order: 9
+        required: false,
+        order: 12
       }),      
 
     ];

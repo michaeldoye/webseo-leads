@@ -19,3 +19,10 @@
 .dashboard-card-content {
   text-align: center;
 }
+
+button.add-lead {
+  position: fixed;
+  z-index: 99;
+  bottom: 30px;
+  left: 30px;
+}

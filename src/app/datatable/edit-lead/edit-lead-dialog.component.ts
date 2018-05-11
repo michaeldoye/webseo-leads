@@ -6,6 +6,7 @@ import { QuestionService } from '../../lead-form/question.service';
 @Component({
   selector: 'lead-edit-dialog',
   templateUrl: 'edit-lead-dialog.component.html', 
+  styles: [`:host {position:relative;display:block}`]
 })
 export class EditLeadComponent implements OnInit {
 
@@ -16,13 +17,15 @@ export class EditLeadComponent implements OnInit {
     private api: LeadsService,
     private feilds: QuestionService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-      this.formFeilds = feilds.getQuestions();
+      this.formFeilds = feilds.getQuestions(data.data);
     }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    //console.log(this.data.data)
+  }
 
 }

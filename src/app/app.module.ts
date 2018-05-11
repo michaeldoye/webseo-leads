@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatCheckboxModule, MatDialogModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule, MatBottomSheetModule, MatTooltipModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
+import { MatCheckboxModule, MatDialogModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule, MatBottomSheetModule, MatTooltipModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, MatProgressSpinnerModule, MatProgressBarModule } from '@angular/material';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DatatableComponent } from './datatable/datatable.component';
 import { LeadsService } from './leads.service';
@@ -19,6 +19,7 @@ import { EditLeadComponent } from './datatable/edit-lead/edit-lead-dialog.compon
 import { DynamicFormComponent } from './lead-form/lead-form.component';
 import { DynamicFormQuestionComponent } from './lead-form/lead-form-question.component';
 import { QuestionService } from './lead-form/question.service';
+import { LoadingOverlayComponent } from './loading-overlay/loading-overlay.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { QuestionService } from './lead-form/question.service';
     LeadTagsComponent,
     EditLeadComponent,
     DynamicFormComponent,
-    DynamicFormQuestionComponent
+    DynamicFormQuestionComponent,
+    LoadingOverlayComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +61,9 @@ import { QuestionService } from './lead-form/question.service';
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule
   ],
   entryComponents: [
     DataTableDialogComponent,
