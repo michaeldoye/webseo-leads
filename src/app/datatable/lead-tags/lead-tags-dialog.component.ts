@@ -28,7 +28,8 @@ export class LeadTagsComponent implements OnInit {
 
   addTagToLead(tags: any, id: number) {
     let tag = tags.selectedOptions.selected.map(item => item.value);
-    this.api.dbAddTagToLead(tag.toString(), id).subscribe(res => console.log(res));
+    this.api.dbAddTagToLead(tag.toString(), id)
+      .subscribe(res => console.log(res), error => console.log(error));
   }
 
 }

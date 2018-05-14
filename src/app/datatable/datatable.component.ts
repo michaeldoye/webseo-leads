@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource, MatDialog, MatBottomSheet } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, MatDialog, MatBottomSheet, MatSortable } from '@angular/material';
 import { DatatableDataSource } from './datatable-datasource';
 import { LeadsService, Leads } from '../leads.service';
 import { DataTableDialogComponent } from './dialog/datatable-dialog.compnent';
 import { DataTableBottomSheet } from './bottom-sheet/data-table-bottom-sheet.component';
+import { LeadTagsComponent } from './lead-tags/lead-tags-dialog.component';
 
 @Component({
   selector: 'datatable',
@@ -22,10 +23,15 @@ export class DatatableComponent implements OnInit, OnChanges {
   displayedColumns = ['checkbox', 'id', 'companyName', 'personName', 'emailAddress', 'tags', 'actions'];
 
   checkAll: any;
-  selectedPosts: Array<number> = [];  
+  selectedLeads: Array<number> = [];
+  isLoading: boolean = false;
 
-  constructor(private api: LeadsService, public dialog: MatDialog, private bottomSheet: MatBottomSheet) {
-    this.dataSource = new MatTableDataSource();
+  constructor(
+    private api: LeadsService, 
+    public dialog: MatDialog, 
+    private bottomSheet: MatBottomSheet) {
+
+      this.dataSource = new MatTableDataSource();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -33,17 +39,20 @@ export class DatatableComponent implements OnInit, OnChanges {
     this.getTableData();
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {   
     this.getTableData();
   }
 
   getTableData(): void {
+    this.isLoading = true;
     this.api.dbGetLeads().subscribe((data: any) => {  
       this.allLeads = data;
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-    });    
+      this.selectedLeads = [];
+      this.isLoading = false;
+    }, error => console.log(error));    
   }
 
   applyFilter(filterValue: string): void {
@@ -57,26 +66,29 @@ export class DatatableComponent implements OnInit, OnChanges {
       width: '750px',
       data: {data: rowData}
     });
+    dialogRef.afterClosed().subscribe(result => {
+      this.getTableData();
+    });
   }
 
   doCheckAll(value: boolean): void {
-    if (value) this.selectedPosts = [];
+    if (value) this.selectedLeads = [];
     this.allLeads.forEach((lead: Leads) => {
       lead.isChecked = value;
       if (value) {
-        this.selectedPosts.push(lead.id);
+        this.selectedLeads.push(lead.id);
       } else {
-        this.selectedPosts = [];
+        this.selectedLeads = [];
       }
     })
   }
 
   doSinglePostSelection(id: number, isChecked: boolean): void {
     if (isChecked) {
-      this.selectedPosts.push(id);
+      this.selectedLeads.push(id);
     } else {
-      let indx = this.selectedPosts.indexOf(id);
-      if (indx > -1) this.selectedPosts.splice(indx, 1);
+      let indx = this.selectedLeads.indexOf(id);
+      if (indx > -1) this.selectedLeads.splice(indx, 1);
     }
   }  
 
@@ -93,9 +105,29 @@ export class DatatableComponent implements OnInit, OnChanges {
     });
   } 
 
-
-  getRowTags(tags) {
+  getRowTags(tags): Array<any> {
     return tags.replace(/['"]+/g, '').split(',');
+  }
+
+  removeTag(rowData: Leads, tag: string) {
+    let alltags = this.getRowTags(rowData.tags);
+    let tags = alltags.filter(t => t !== tag);
+    this.api.dbAddTagToLead(tags.toString(), rowData.id)
+      .subscribe(res => this.getTableData(), error => console.log(error));
+    return false;
+  }
+
+
+  openTagDialog(rowData: Leads): void {
+    let dialogRef = this.dialog.open(LeadTagsComponent, {
+      width: '500px',
+      data: {data: rowData}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.getTableData();
+    });
   }
 
 }

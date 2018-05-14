@@ -6,29 +6,30 @@
       <mat-icon matPrefix>filter_list</mat-icon>
     </mat-form-field>
   </div>
-  <div fxFlex="5%" class="delete-lead" *ngIf="selectedPosts.length > 0">
-    <button mat-icon-button matTooltip="Delete Selected">
-      <mat-icon aria-label="icon">delete</mat-icon>
+  <div fxFlex="8%" class="delete-lead">
+    <app-button-delete *ngIf="selectedLeads.length > 0" [leadsToDelete]="selectedLeads" (onDelete)="getTableData()"></app-button-delete>
+    <button mat-icon-button matTooltip="refresh" (click)="getTableData()">
+      <mat-icon>refresh</mat-icon>
     </button>
   </div>
 </div>
 
 <div> 
-  <mat-table #table [dataSource]="dataSource" matSort aria-label="Elements">
+  <mat-table #table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc" aria-label="Elements">
 
     <ng-container matColumnDef="checkbox">
-      <mat-header-cell fxFlex="60px" *matHeaderCellDef> 
+      <mat-header-cell fxFlex="5%" *matHeaderCellDef> 
         <mat-checkbox [(ngModel)]="checkAll" [checked]="isAllChecked()" (ngModelChange)="doCheckAll(checkAll)"></mat-checkbox>  
       </mat-header-cell>
-      <mat-cell fxFlex="60px" *matCellDef="let row;"> 
+      <mat-cell fxFlex="5%" *matCellDef="let row;"> 
         <mat-checkbox [(ngModel)]="row.isChecked" [value]="row.id" (ngModelChange)="doSinglePostSelection(row.id, row.isChecked)"></mat-checkbox>      
       </mat-cell>
     </ng-container>    
 
     <!-- Id Column -->
-    <ng-container matColumnDef="id" style="max-width:50px">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
-      <mat-cell *matCellDef="let row" (click)="openDialog(row)">{{row.id}}</mat-cell>
+    <ng-container matColumnDef="id">
+      <mat-header-cell fxFlex="5%" *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+      <mat-cell fxFlex="5%" *matCellDef="let row" (click)="openDialog(row)">{{row.id}}</mat-cell>
     </ng-container>
 
     <!-- Company Name Column -->
@@ -52,9 +53,16 @@
     <!-- Tags Column -->
     <ng-container matColumnDef="tags">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Tags</mat-header-cell>
-      <mat-cell *matCellDef="let row" (click)="openDialog(row)">
+      <mat-cell *matCellDef="let row">
+        <!-- <app-input-add-tag></app-input-add-tag> -->
         <ng-container *ngIf="row.tags">
-          <span *ngFor="let tag of getRowTags(row.tags)" class="tag tag-{{tag}}">{{tag}}</span>
+          <mat-chip-list #chipList>
+              <mat-chip *ngFor="let tag of getRowTags(row.tags)" [selectable]="true" [removable]="true" (removed)="removeTag(row, tag)">
+                <span [style.cursor]="'pointer'" (click)="openTagDialog(row)">{{tag}}</span>
+                <mat-icon matTooltip="delete" matChipRemove>cancel</mat-icon>
+              </mat-chip>
+          </mat-chip-list>
+          <!-- <span *ngFor="let tag of getRowTags(row.tags)" class="tag tag-{{tag}}">{{tag}}</span> -->
         </ng-container>
       </mat-cell>
     </ng-container>    
@@ -63,7 +71,7 @@
       <mat-header-cell fxFlex="5%" *matHeaderCellDef mat-sort-header> Actions </mat-header-cell>
       <mat-cell fxFlex="5%" *matCellDef="let row">
         <button mat-icon-button matTooltip="Options" (click)="openBottomSheet(row)">
-          <mat-icon color="primary" aria-label="menu">more_horiz</mat-icon>
+          <mat-icon aria-label="menu">more_horiz</mat-icon>
         </button>
       </mat-cell>
     </ng-container>     
@@ -79,3 +87,5 @@
     [pageSizeOptions]="[15, 20, 50, 100]">
   </mat-paginator>
 </div>
+
+<loading-overlay [isLoading]="isLoading"></loading-overlay>

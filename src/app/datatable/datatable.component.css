@@ -42,38 +42,38 @@ span.tag:hover {
   width: 100%;
 }
 
-span.tag.tag-have.contacted {
+.tag.tag-have.contacted {
   background: #4CAF50;
   color: white;
 }
 
-span.tag.tag-to.contact {
+.tag.tag-to.contact {
   background: #F44336;
   color: white;
 }
 
-span.tag.tag-needs.info {
+.tag.tag-needs.info {
   background: #FF9800;
   color: white;
 }
 
-span.tag.tag-website {
+.tag.tag-website {
   background: #03A9F4;
   color: white;
 }
 
-span.tag.tag-seo {
+.tag.tag-seo {
   background: #9C27B0;
   color: white;
 }
 
-span.tag.tag-ppc {
+.tag.tag-ppc {
   background: teal;
   color: white;
 }
 
 
-span.tag.tag-social {
+.tag.tag-social {
   background: #ff0057;
   color: white;
 }
@@ -82,4 +82,9 @@ span.tag.tag-social {
   position: absolute;
   top: 5px;
   right: 50px;
+}
+
+mat-chip {
+  padding-bottom: 3px!important;
+  padding-top: 3px!important;
 }

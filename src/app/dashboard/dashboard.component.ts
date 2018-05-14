@@ -17,7 +17,7 @@ export class DashboardComponent {
 
   doRefresh: boolean = false;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog) {} 
 
   openDialog(): void {
     let dialogRef = this.dialog.open(EditLeadComponent, {

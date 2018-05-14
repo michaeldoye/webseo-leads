@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatCheckboxModule, MatDialogModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule, MatBottomSheetModule, MatTooltipModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, MatProgressSpinnerModule, MatProgressBarModule } from '@angular/material';
+import { MatCheckboxModule, MatDialogModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule, MatBottomSheetModule, MatTooltipModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, MatProgressSpinnerModule, MatProgressBarModule, MatSnackBarModule, MatBadgeModule, MatChipsModule } from '@angular/material';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DatatableComponent } from './datatable/datatable.component';
 import { LeadsService } from './leads.service';
@@ -20,6 +20,10 @@ import { DynamicFormComponent } from './lead-form/lead-form.component';
 import { DynamicFormQuestionComponent } from './lead-form/lead-form-question.component';
 import { QuestionService } from './lead-form/question.service';
 import { LoadingOverlayComponent } from './loading-overlay/loading-overlay.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { ButtonDeleteComponent } from './user-actions/button-delete/button-delete.component';
+import { DraggableDirective } from './draggable.directive';
+import { InputAddTagComponent } from './user-actions/input-add-tag/input-add-tag.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +37,11 @@ import { LoadingOverlayComponent } from './loading-overlay/loading-overlay.compo
     EditLeadComponent,
     DynamicFormComponent,
     DynamicFormQuestionComponent,
-    LoadingOverlayComponent
+    LoadingOverlayComponent,
+    ConfirmDialogComponent,
+    ButtonDeleteComponent,
+    DraggableDirective,
+    InputAddTagComponent
   ],
   imports: [
     BrowserModule,
@@ -63,13 +71,17 @@ import { LoadingOverlayComponent } from './loading-overlay/loading-overlay.compo
     MatDatepickerModule,
     MatNativeDateModule,
     MatProgressSpinnerModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatSnackBarModule,
+    MatBadgeModule,
+    MatChipsModule
   ],
   entryComponents: [
     DataTableDialogComponent,
     DataTableBottomSheet,
     LeadTagsComponent,
-    EditLeadComponent
+    EditLeadComponent,
+    ConfirmDialogComponent
   ],
   providers: [
     LeadsService,

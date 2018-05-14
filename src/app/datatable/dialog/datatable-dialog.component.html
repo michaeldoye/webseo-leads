@@ -1,7 +1,14 @@
-<mat-toolbar style="display:flex" mat-dialog-title>
+<mat-toolbar style="display:flex;cursor:move" mat-dialog-title [draggable] dragTarget=".mat-dialog-container">
   <span>Lead Details for {{leadData.personName}}</span>&nbsp;<span *ngIf="leadData.companyName">({{leadData.companyName}})</span>
   <span fxFlex></span>
-  <button mat-icon-button matTooltip="Close" mat-dialog-close>
+  <app-button-delete [leadsToDelete]="[leadData.id]" (onDelete)="this.dialog.closeAll()"></app-button-delete>
+  <button mat-icon-button matTooltip="tags" (click)="openTagDialog()">
+    <mat-icon matListIcon aria-label="menu">label</mat-icon>
+  </button>  
+  <button mat-icon-button matTooltip="edit lead" (click)="openDialog()">
+    <mat-icon matListIcon aria-label="menu">edit</mat-icon>
+  </button>  
+  <button mat-icon-button matTooltip="close" mat-dialog-close>
     <mat-icon matListIcon aria-label="menu">close</mat-icon>
   </button>
 </mat-toolbar>

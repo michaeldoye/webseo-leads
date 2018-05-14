@@ -1,0 +1,13 @@
+.main-toolbar {
+  padding-left: 35px;
+  padding-right: 35px;
+}
+
+.example-container.dark-theme {
+  background: #303030!important;
+}
+
+.example-container {
+  background: #efefef;
+  height: 100%;
+}
