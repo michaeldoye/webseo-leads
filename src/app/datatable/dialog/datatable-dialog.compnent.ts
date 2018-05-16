@@ -51,4 +51,11 @@ export class DataTableDialogComponent implements OnInit {
     });
   }
 
+  openLink(leadData: Leads) {
+    window.open(
+      `https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&to=${leadData.emailAddress}&body=Hi ${leadData.personName}`,
+      '_blank'
+    );
+  }
+
 }

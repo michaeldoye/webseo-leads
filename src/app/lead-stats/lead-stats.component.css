@@ -1,0 +1,9 @@
+.lead-conversion-rate {
+  margin-bottom: 0px;
+}
+
+.lead-conversion-rate mat-icon {
+  width: 64px;
+  height: 64px;
+  font-size: 200%;
+}

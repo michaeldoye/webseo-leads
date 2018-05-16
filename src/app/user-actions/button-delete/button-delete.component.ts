@@ -11,7 +11,7 @@ import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.comp
 export class ButtonDeleteComponent implements OnInit {
 
   @Input() leadsToDelete: Array<any>; 
-  @Output() onDelete = new EventEmitter<boolean>();;
+  @Output() onDelete = new EventEmitter<boolean>();
 
   constructor(
     private api: LeadsService, 
@@ -34,7 +34,7 @@ export class ButtonDeleteComponent implements OnInit {
     });
   }
 
-  confrimDelete(rowData: Leads): void {
+  confrimDelete(): void {
     let dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '550px',
       data: {item: this.leadsToDelete}

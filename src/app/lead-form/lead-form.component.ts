@@ -9,6 +9,13 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 @Component({
   selector: 'app-dynamic-form',
   templateUrl: './lead-form.component.html',
+  styles: [`
+  .form-row {
+    position: absolute;
+    bottom: 25px;
+    right: 40px;
+  }  
+  `],
   providers: [ QuestionControlService ]
 })
 export class DynamicFormComponent implements OnInit {

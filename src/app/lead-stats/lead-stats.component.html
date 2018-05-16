@@ -1,0 +1,26 @@
+<div fxLayout="column" fxLayoutAlign="center center" style="height: 300px;">
+
+  <ng-container *ngIf="leads">
+    <h2 [ngSwitch]="true" class="mat-display-1 lead-conversion-rate">
+      <span *ngSwitchCase="conversionRate >= 0 && conversionRate < 10">
+        <mat-icon>sentiment_very_dissatisfied</mat-icon>
+      </span>
+      <span *ngSwitchCase="conversionRate > 10 && conversionRate < 20">
+        <mat-icon>sentiment_dissatisfied</mat-icon>
+      </span>
+      <span *ngSwitchCase="conversionRate > 20 && conversionRate < 30">
+        <mat-icon>sentiment_satisfied</mat-icon>
+      </span>
+      <span *ngSwitchCase="conversionRate > 30 && conversionRate < 40">
+        <mat-icon>sentiment_satisfied_alt</mat-icon>
+      </span>      
+      <span *ngSwitchCase="conversionRate > 40 && conversionRate < 500">
+        <mat-icon>sentiment_very_satisfied</mat-icon>
+      </span>
+    </h2>
+    <h2 class="mat-h2 lead-conversion-text" [matTooltip]="conversionTooltip">Lead Conversion Rate {{conversionRate | number:'1.2-2'}}%</h2>
+  </ng-container>
+
+</div>
+
+<loading-overlay [isLoading]="isLoading"></loading-overlay>

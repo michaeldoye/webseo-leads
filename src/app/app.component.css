@@ -10,4 +10,16 @@
 .example-container {
   background: #efefef;
   height: 100%;
+  padding-bottom: 9px;
+}
+
+span.footer-text {
+  font-size: 14px;
+}
+
+span.footer-text mat-icon {
+  width: 20px;
+  height: 24px;
+  font-size: 16px;
+  vertical-align: bottom;
 }

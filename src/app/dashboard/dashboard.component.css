@@ -8,6 +8,7 @@
   left: 15px;
   right: 15px;
   bottom: 15px;
+  overflow: hidden;
 }
 
 .more-button {
@@ -16,9 +17,9 @@
   right: 10px;
 }
 
-.dashboard-card-content {
-  text-align: center;
-}
+/* .dashboard-card-content {
+  height: 805px;
+} */
 
 button.add-lead {
   position: fixed;

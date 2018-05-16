@@ -84,7 +84,7 @@ export class QuestionService {
         order: 6
       }),       
 
-      new TextboxQuestion({
+      new DateQuestion({
         value: data.leadDate || '',
         key: 'leadDate',
         label: 'Lead Date',
@@ -92,7 +92,7 @@ export class QuestionService {
         order: 1
       }),
 
-      new TextboxQuestion({
+      new DateQuestion({
         value: data.firstContact || '',
         key: 'firstContact',
         label: 'First Contact Date',
@@ -108,7 +108,7 @@ export class QuestionService {
         order: 8
       }), 
       
-      new TextboxQuestion({
+      new DateQuestion({
         value: data.quotedDate || '',
         key: 'quotedDate',
         label: 'Quoted Date',
@@ -122,7 +122,16 @@ export class QuestionService {
         label: 'Current Status',
         required: false,
         order: 12
-      }),      
+      }),
+      
+      new TextboxQuestion({
+        value: data.tags ? data.tags.replace(/['"]+/g, '') : '' || '',
+        key: 'tags',
+        label: 'Tags',
+        required: false,
+        hint: 'comma seperated eg: seo,dev,ppc',
+        order: 13
+      }),       
 
     ];
 

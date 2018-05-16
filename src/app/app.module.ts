@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatCheckboxModule, MatDialogModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule, MatBottomSheetModule, MatTooltipModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, MatProgressSpinnerModule, MatProgressBarModule, MatSnackBarModule, MatBadgeModule, MatChipsModule } from '@angular/material';
+import { MatCheckboxModule, MatDialogModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule, MatBottomSheetModule, MatTooltipModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, MatProgressSpinnerModule, MatProgressBarModule, MatSnackBarModule, MatBadgeModule, MatChipsModule, MatSelectModule } from '@angular/material';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DatatableComponent } from './datatable/datatable.component';
 import { LeadsService } from './leads.service';
@@ -24,6 +24,10 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 import { ButtonDeleteComponent } from './user-actions/button-delete/button-delete.component';
 import { DraggableDirective } from './draggable.directive';
 import { InputAddTagComponent } from './user-actions/input-add-tag/input-add-tag.component';
+import { LoginComponent } from './user-actions/login/login.component';
+import { LeadStatsComponent } from './lead-stats/lead-stats.component';
+import { LeadCountsComponent } from './lead-stats/lead-counts/lead-counts.component';
+import { ScrollbarModule } from './scrollbar/scrollbar.module';
 
 @NgModule({
   declarations: [
@@ -41,7 +45,10 @@ import { InputAddTagComponent } from './user-actions/input-add-tag/input-add-tag
     ConfirmDialogComponent,
     ButtonDeleteComponent,
     DraggableDirective,
-    InputAddTagComponent
+    InputAddTagComponent,
+    LoginComponent,
+    LeadStatsComponent,
+    LeadCountsComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,7 +81,9 @@ import { InputAddTagComponent } from './user-actions/input-add-tag/input-add-tag
     MatProgressBarModule,
     MatSnackBarModule,
     MatBadgeModule,
-    MatChipsModule
+    MatChipsModule,
+    MatSelectModule,
+    ScrollbarModule
   ],
   entryComponents: [
     DataTableDialogComponent,

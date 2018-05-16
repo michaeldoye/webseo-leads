@@ -2,10 +2,13 @@
   <span>Lead Details for {{leadData.personName}}</span>&nbsp;<span *ngIf="leadData.companyName">({{leadData.companyName}})</span>
   <span fxFlex></span>
   <app-button-delete [leadsToDelete]="[leadData.id]" (onDelete)="this.dialog.closeAll()"></app-button-delete>
+  <button mat-icon-button matTooltip="email" (click)="openLink(leadData)">
+    <mat-icon matListIcon aria-label="menu">send</mat-icon>
+  </button>   
   <button mat-icon-button matTooltip="tags" (click)="openTagDialog()">
     <mat-icon matListIcon aria-label="menu">label</mat-icon>
   </button>  
-  <button mat-icon-button matTooltip="edit lead" (click)="openDialog()">
+  <button mat-icon-button matTooltip="edit" (click)="openDialog()">
     <mat-icon matListIcon aria-label="menu">edit</mat-icon>
   </button>  
   <button mat-icon-button matTooltip="close" mat-dialog-close>
@@ -14,10 +17,7 @@
 </mat-toolbar>
 
 <div mat-dialog-content fxLayout="row" fxLayoutAlign="start center">
-
-
   <div fxFlex="50%">
-
     <mat-list>
       <mat-list-item>
         <mat-icon matListIcon>update</mat-icon>
@@ -66,16 +66,12 @@
           <span class="lead-status-text"> {{leadData.hasMeeting ? leadData.hasMeeting : 'Nothing to show'}} </span>
         </p>
       </mat-list-item> 
-
-      <mat-divider></mat-divider>      
-
+      <mat-divider></mat-divider>  
     </mat-list>   
-
   </div>
 
   <div fxFlex="50%">
     <mat-list>
-
       <mat-list-item>
         <mat-icon matListIcon>room_service</mat-icon>
         <h3 matLine> Requested Services </h3>
@@ -123,12 +119,9 @@
           <span class="lead-status-text"> {{leadData.quotedDate ? leadData.quotedDate : 'Nothing to show'}} </span>
         </p>
       </mat-list-item>
-  
       <mat-divider></mat-divider>
-        
     </mat-list>    
   </div>
-
 </div>
 
 <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">

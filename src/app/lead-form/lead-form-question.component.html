@@ -5,12 +5,13 @@
     <mat-form-field style="width: 100%" *ngIf="question.controlType !== 'date'" class="example-full-width" appearance="outline">
       <mat-label>{{question.label}}</mat-label>
       <input matInput [placeholder]="question.label" [formControlName]="question.key" [id]="question.key" [type]="question.type">
+      <mat-hint *ngIf="question.hint" align="end">{{question.hint}}</mat-hint>
       <mat-error class="errorMessage" *ngIf="!isValid">{{question.label}} is required</mat-error>
     </mat-form-field>
 
     <mat-form-field style="width: 100%" *ngIf="question.controlType === 'date'" class="example-full-width" appearance="outline">
       <mat-label>{{question.label}}</mat-label>
-      <input matInput [matDatepicker]="picker" [formControlName]="question.key" [placeholder]="question.label">
+      <input matInput [matDatepicker]="picker" (focus)="picker.open()" [formControlName]="question.key" [placeholder]="question.label">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
       <mat-error class="errorMessage" *ngIf="!isValid">{{question.label}} is required</mat-error>

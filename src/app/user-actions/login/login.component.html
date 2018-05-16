@@ -1,0 +1,11 @@
+<div fxLayout="row" class="cont" fxLayoutAlign="center center">
+  <div class="login-container">
+    <div class="example-container" fxLayoutGap="15px">
+      <mat-form-field appearance="standard">
+        <mat-label>Enter a password</mat-label>
+        <input matInput type="password" [(ngModel)]="pass" placeholder="the usual...">
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="doLogin(pass)" [disabled]="!pass">Login</button>
+    </div>    
+  </div>
+</div>

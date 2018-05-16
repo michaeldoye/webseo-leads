@@ -8,18 +8,15 @@
         <mat-card-header>
           <mat-card-title>
             {{card.title}}
-            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu" xPosition="before">
-              <button mat-menu-item>Expand</button>
-              <button mat-menu-item>Remove</button>
-            </mat-menu>
           </mat-card-title>
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
-          <datatable [shouldRefresh]="doRefresh" *ngIf="card.component == 'datatable'"></datatable>
-          <div *ngIf="card.component == ''">Card Content Here</div>
+          <!-- <ms-scrollbar> -->
+            <datatable (onRefresh)="doUpdate()" [shouldRefresh]="doRefresh" *ngIf="card.component == 'datatable'"></datatable>
+            <app-lead-stats *ngIf="card.component == 'stats'" [shouldRefresh]="maybeUpdate" fxLayout="row" fxLayoutAlign="center center" fxFill></app-lead-stats>
+            <app-lead-counts *ngIf="card.component == 'count'" [shouldRefresh]="maybeUpdate"></app-lead-counts>
+            <div *ngIf="card.component == ''">Card Content Here</div>    
+          <!-- </ms-scrollbar> -->
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>

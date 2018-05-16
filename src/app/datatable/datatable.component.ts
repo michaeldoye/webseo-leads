@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges, SimpleChange, Output, EventEmitter } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource, MatDialog, MatBottomSheet, MatSortable } from '@angular/material';
 import { DatatableDataSource } from './datatable-datasource';
 import { LeadsService, Leads } from '../leads.service';
@@ -14,6 +14,7 @@ import { LeadTagsComponent } from './lead-tags/lead-tags-dialog.component';
 export class DatatableComponent implements OnInit, OnChanges {
 
   @Input() shouldRefresh: boolean;
+  @Output() onRefresh = new EventEmitter<boolean>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -21,10 +22,13 @@ export class DatatableComponent implements OnInit, OnChanges {
   allLeads: Array<Leads> = [];
 
   displayedColumns = ['checkbox', 'id', 'companyName', 'personName', 'emailAddress', 'tags', 'actions'];
+  allTags: Array<any> = ['dev', 'seo', 'ppc', 'social', 'pending', 'to contact', 'needs info', 'is client'];
 
   checkAll: any;
   selectedLeads: Array<number> = [];
   isLoading: boolean = false;
+
+  tagFilter: any = '';
 
   constructor(
     private api: LeadsService, 
@@ -51,7 +55,9 @@ export class DatatableComponent implements OnInit, OnChanges {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.selectedLeads = [];
+      this.tagFilter = '';
       this.isLoading = false;
+      this.onRefresh.emit(true);
     }, error => console.log(error));    
   }
 
@@ -63,7 +69,7 @@ export class DatatableComponent implements OnInit, OnChanges {
 
   openDialog(rowData: Leads): void {
     let dialogRef = this.dialog.open(DataTableDialogComponent, {
-      width: '750px',
+      width: '850px',
       data: {data: rowData}
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -128,6 +134,20 @@ export class DatatableComponent implements OnInit, OnChanges {
       console.log('The dialog was closed');
       this.getTableData();
     });
+  }
+
+  onTagFilterChange(selected) {
+    if(!selected.value) {
+      this.getTableData();
+    }
+    else {
+      let filteredLeads: any = this.allLeads.filter(el => {
+        return el.tags.indexOf(selected.value) > -1;
+      })
+      this.dataSource = new MatTableDataSource(filteredLeads);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 
 }

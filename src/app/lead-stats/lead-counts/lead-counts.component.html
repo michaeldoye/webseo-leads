@@ -1,0 +1,59 @@
+<mat-list *ngIf="leads">
+  <mat-divider></mat-divider>
+
+  <mat-list-item>
+    <mat-icon matListIcon>info</mat-icon>
+    <h3 matLine> SEO Leads </h3>
+    <p matLine>
+      <span>Currently <strong>{{seoLeads.length}}</strong> SEO leads</span>
+      <span class="demo-2"> ({{ percentageOfAllLeads(seoLeads.length, leadsCount) | number:'1.2-2' }}% of all leads)</span>
+    </p>
+  </mat-list-item>
+
+  <mat-divider></mat-divider>
+
+  <mat-list-item>
+    <mat-icon matListIcon>info</mat-icon>
+    <h3 matLine> Development Leads </h3>
+    <p matLine>
+      <span>Currently <strong>{{devLeads.length}}</strong> development leads</span>
+      <span class="demo-2"> ({{ percentageOfAllLeads(devLeads.length, leadsCount) | number:'1.2-2' }}% of all leads)</span>
+    </p>
+  </mat-list-item>  
+
+  <mat-divider></mat-divider>
+
+  <mat-list-item>
+    <mat-icon matListIcon>info</mat-icon>
+    <h3 matLine> PPC Leads </h3>
+    <p matLine>
+      <span>Currently <strong>{{ppcLeads.length}}</strong> PPC leads</span>
+      <span class="demo-2"> ({{ percentageOfAllLeads(ppcLeads.length, leadsCount) | number:'1.2-2' }}% of all leads)</span>
+    </p>
+  </mat-list-item>
+
+  <mat-divider></mat-divider>
+
+  <mat-list-item>
+    <mat-icon matListIcon>info</mat-icon>
+    <h3 matLine> Social Leads </h3>
+    <p matLine>
+      <span>Currently <strong>{{socialLeads.length}}</strong> social leads</span>
+      <span class="demo-2"> ({{ percentageOfAllLeads(socialLeads.length, leadsCount) | number:'1.2-2' }}% of all leads)</span>
+    </p>
+  </mat-list-item>
+
+  <mat-divider></mat-divider>
+
+  <!-- <mat-list-item>
+    <mat-icon matListIcon>info</mat-icon>
+    <h3 matLine> Total Leads </h3>
+    <p matLine>
+      <span>Currently <strong>{{leadsCount}}</strong> Total leads</span>
+    </p>
+  </mat-list-item>  
+  
+  <mat-divider></mat-divider> -->
+</mat-list>
+
+<loading-overlay [isLoading]="isLoading"></loading-overlay>

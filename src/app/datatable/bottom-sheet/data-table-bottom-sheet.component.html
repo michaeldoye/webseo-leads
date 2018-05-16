@@ -1,11 +1,13 @@
 <mat-nav-list>
   <a href="javascript:void(0)" mat-list-item (click)="openDialog()">
     <mat-icon matListIcon>label</mat-icon>
-    <span mat-line>Add a tag</span>
+    <span mat-line>Edit tags</span>
     <span mat-line>Add some tags to this lead</span>
   </a>
 
-  <a href="mailto:{{data.data.emailAddress}}" mat-list-item>
+  <a target="_blank" 
+    href="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&to={{data.data.emailAddress}}&body=Hi {{data.data.personName}}" 
+    mat-list-item>
     <mat-icon matListIcon>send</mat-icon>
     <span mat-line>Send email</span>
     <span mat-line>Send this lead an email</span>

@@ -1,29 +1,38 @@
 <div class="example-container" [class.light-blue-theme]="!isDarkTheme" [class.dark-theme]="isDarkTheme">
-  <mat-toolbar class="main-toolbar">
+  <mat-toolbar class="main-toolbar" color="primary">
     <span>Leads Dashboard</span>
     <span fxFlex></span>
 
-    <button matTooltip="New Lead" 
+    <button *ngIf="isLoggedIn"
+      matTooltip="New Lead" 
       (click)="openDialog()"
       mat-icon-button>
         <mat-icon>add</mat-icon>
     </button>
 
-    <button *ngIf="isDarkTheme" 
+    <button *ngIf="isDarkTheme && isLoggedIn" 
       matTooltip="Light theme"  
       mat-icon-button 
       (click)="changeTheme()">
-        <mat-icon>brightness_5</mat-icon>
+        <mat-icon>wb_sunny</mat-icon>
     </button>
 
-    <button *ngIf="!isDarkTheme" 
+    <button *ngIf="!isDarkTheme && isLoggedIn" 
       matTooltip="Dark theme" 
       mat-icon-button 
       (click)="changeTheme()">
         <mat-icon>brightness_3</mat-icon>
     </button>
 
-  </mat-toolbar>  
-  <dashboard></dashboard>
+    <button *ngIf="isLoggedIn"
+      matTooltip="Logout" 
+      (click)="logOut()"
+      mat-icon-button>
+        <mat-icon>exit_to_app</mat-icon>
+    </button>    
+
+  </mat-toolbar>
+  <app-login *ngIf="!isLoggedIn" (onLogin)="checkLogin()" fxLayout="row" fxLayoutAlign="center center" fxFill></app-login>
+  <dashboard *ngIf="isLoggedIn"></dashboard>
 </div>
 

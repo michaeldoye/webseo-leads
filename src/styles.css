@@ -3,11 +3,13 @@
 
 html {
   height: 100%;
+  display: block;
 }
 
 body {
   margin: 0px;
-  height: 100%;
+  padding: 0px;
+  display: block;
 }
 
 .my-full-screen-dialog .mat-dialog-container {

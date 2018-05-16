@@ -80,8 +80,8 @@ span.tag:hover {
 
 .delete-lead {
   position: absolute;
-  top: 5px;
-  right: 50px;
+  top: 10px;
+  right: 25px;
 }
 
 mat-chip {

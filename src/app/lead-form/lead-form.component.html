@@ -9,7 +9,9 @@
     </mat-grid-list>
 
     <div class="form-row">
-      <button mat-raised-button color="primary" style="width:100%" type="submit" [disabled]="!form.valid">Save</button>
+      <button mat-fab color="primary" matTooltip="save" type="submit" [disabled]="!form.valid">
+          <mat-icon aria-label="save">save</mat-icon>
+      </button>
     </div>
 
   </form>

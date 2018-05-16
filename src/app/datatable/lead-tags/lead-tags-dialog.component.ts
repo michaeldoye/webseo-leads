@@ -8,7 +8,7 @@ import { LeadsService } from '../../leads.service';
 })
 export class LeadTagsComponent implements OnInit {
 
-  allTags: Array<any> = ['website', 'seo', 'ppc', 'social', 'have contacted', 'to contact', 'needs info'];
+  allTags: Array<any> = ['dev', 'seo', 'ppc', 'social', 'pending', 'to contact', 'needs info', 'is client'];
   currentId: number;
   selectedTags: any;
 

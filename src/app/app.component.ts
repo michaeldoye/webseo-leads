@@ -12,6 +12,7 @@ import { StorageService } from './storage.service';
 export class AppComponent {
   title = 'app';
   isDarkTheme: boolean;
+  isLoggedIn: boolean = this.storage.get('loggedIn') || false;
 
   constructor(
     public dialog: MatDialog,
@@ -47,5 +48,14 @@ export class AppComponent {
       console.log('The dialog was closed');
       // TODO refresh datatable
     });
-  }     
+  }
+  
+  checkLogin() {
+    this.isLoggedIn = !this.isLoggedIn;
+  }
+
+  logOut() {
+    this.isLoggedIn = false;
+    this.storage.set('loggedIn', false);
+  }
 }

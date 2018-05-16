@@ -1,6 +1,6 @@
 {
   "name": "leads",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -26,6 +26,7 @@
     "core-js": "^2.5.4",
     "moment": "^2.22.1",
     "rxjs": "^6.0.0",
+    "smooth-scrollbar": "^8.2.7",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

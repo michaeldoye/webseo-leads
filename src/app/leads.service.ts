@@ -32,7 +32,7 @@ export class LeadsService {
   public dbGetLeadTags(id: number) {}
 
   public saveNewLead(lead: Leads): Observable<any> {
-    lead.tags = 'manual';
+    if(!lead.tags) lead.tags = 'manual';
     return this.http.get(`${this.api}/addnew/${JSON.stringify(lead)}`)
       .pipe(
         retry(3),
@@ -81,5 +81,6 @@ export interface Leads {
   requestedServices: string,
   currentStatus: string,
   tags: string,
-  isChecked?: boolean
+  isChecked?: boolean,
+  length?: number
 }
