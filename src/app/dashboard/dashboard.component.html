@@ -4,11 +4,16 @@
   </button>
   <mat-grid-list cols="3" rowHeight="435px">
     <mat-grid-tile *ngFor="let card of cards" [colspan]="card.cols" [rowspan]="card.rows">
-      <mat-card class="dashboard-card">
+      <mat-card class="dashboard-card" [class.fullscreen]="isFullScreen && card.component === 'datatable'">
         <mat-card-header>
           <mat-card-title>
             {{card.title}}
           </mat-card-title>
+          <span fxFlex></span>
+          <button *ngIf="card.component == 'datatable'" mat-icon-button (click)="toggleFullScreen()">
+            <mat-icon matTooltip="fullscreen" *ngIf="!isFullScreen">fullscreen</mat-icon>
+            <mat-icon matTooltip="exit fullscreen" *ngIf="isFullScreen">fullscreen_exit</mat-icon>
+          </button>         
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
           <!-- <ms-scrollbar> -->

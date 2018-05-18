@@ -14,7 +14,7 @@ export class DashboardComponent {
     { title: 'Leads Breakdown', cols: 1, rows: 1, component: 'count' },
     //{ title: 'Card 1', cols: 3, rows: 1, component: '' }
   ];
-
+  isFullScreen: boolean = false;
   doRefresh: boolean = false;
   maybeUpdate: boolean = false;
 
@@ -30,5 +30,9 @@ export class DashboardComponent {
   
   doUpdate() {
     this.maybeUpdate = !this.maybeUpdate;
+  }
+
+  toggleFullScreen(): void {
+    this.isFullScreen = !this.isFullScreen;
   }
 }

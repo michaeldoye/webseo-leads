@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges, SimpleChange, Output, EventEmitter } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource, MatDialog, MatBottomSheet, MatSortable } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, MatDialog, MatBottomSheet, MatSortable, MatSnackBar } from '@angular/material';
 import { DatatableDataSource } from './datatable-datasource';
 import { LeadsService, Leads } from '../leads.service';
 import { DataTableDialogComponent } from './dialog/datatable-dialog.compnent';
@@ -9,7 +9,7 @@ import { LeadTagsComponent } from './lead-tags/lead-tags-dialog.component';
 @Component({
   selector: 'datatable',
   templateUrl: './datatable.component.html',
-  styleUrls: ['./datatable.component.css']
+  styleUrls: ['./datatable.component.css']   
 })
 export class DatatableComponent implements OnInit, OnChanges {
 
@@ -33,6 +33,7 @@ export class DatatableComponent implements OnInit, OnChanges {
   constructor(
     private api: LeadsService, 
     public dialog: MatDialog, 
+    public snackBar: MatSnackBar,
     private bottomSheet: MatBottomSheet) {
 
       this.dataSource = new MatTableDataSource();
@@ -48,17 +49,31 @@ export class DatatableComponent implements OnInit, OnChanges {
   }
 
   getTableData(): void {
-    this.isLoading = true;
-    this.api.dbGetLeads().subscribe((data: any) => {  
-      this.allLeads = data;
-      this.dataSource = new MatTableDataSource(data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.selectedLeads = [];
-      this.tagFilter = '';
-      this.isLoading = false;
-      this.onRefresh.emit(true);
-    }, error => console.log(error));    
+    this.api.isOnline().subscribe(isOnline => {
+      if (isOnline) {
+        this.isLoading = true;
+        this.api.dbGetLeads().subscribe((data: any) => {  
+          this.allLeads = data;
+          this.dataSource = new MatTableDataSource(data);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          this.selectedLeads = [];
+          this.tagFilter = '';
+          this.isLoading = false;
+          this.onRefresh.emit(true);
+        }, error => {
+          console.log(error);
+          this.isLoading = false;
+        }); 
+      } else {
+        console.log('not online, should fetch from cache');
+        let snackBarRef = this.snackBar.open(
+          'Offline, check network connection', 
+          'OK', 
+          {duration: 1000000, horizontalPosition: 'left'}
+        );
+      }
+    });   
   }
 
   applyFilter(filterValue: string): void {

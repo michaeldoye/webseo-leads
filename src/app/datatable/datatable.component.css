@@ -1,10 +1,10 @@
 .mat-cell, .mat-footer-cell {
-  font-size: 13px;
+  /* font-size: 13px; */
 }
 
 mat-footer-row, mat-header-row, mat-row {
-  max-height: 40px;
-  min-height: 40px;
+  /* max-height: 40px;
+  min-height: 40px; */
 }
 
 .mat-column-id {
@@ -42,12 +42,17 @@ span.tag:hover {
   width: 100%;
 }
 
+.tag.tag-is.client {
+  background: #4CAF50;
+  color: #ffffff;
+}
+
 .tag.tag-have.contacted {
   background: #4CAF50;
   color: white;
 }
 
-.tag.tag-to.contact {
+.tag.tag-pending {
   background: #F44336;
   color: white;
 }
@@ -57,7 +62,7 @@ span.tag:hover {
   color: white;
 }
 
-.tag.tag-website {
+.tag.tag-dev {
   background: #03A9F4;
   color: white;
 }
@@ -80,11 +85,15 @@ span.tag:hover {
 
 .delete-lead {
   position: absolute;
-  top: 10px;
-  right: 25px;
+  top: 24px;
+  right: 67px;
 }
 
 mat-chip {
   padding-bottom: 3px!important;
   padding-top: 3px!important;
+}
+
+.mat-row.selected {
+  background: rgba(239, 239, 239, 0.1803921568627451);
 }

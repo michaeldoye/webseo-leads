@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { Observable, throwError, fromEvent, merge, of } from 'rxjs';
+import { catchError, retry, mapTo } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +10,9 @@ import { catchError, retry } from 'rxjs/operators';
 export class LeadsService {
 
   private api: string = 'https://api.webseo.co.za/leads'
+  private online$: Observable<boolean>;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   public dbGetLeads(): Observable<Leads> {
     return this.http.get<Leads>(this.api)
@@ -46,6 +47,14 @@ export class LeadsService {
         retry(3),
         catchError(this.handleError)
       );
+  }
+
+  public isOnline(): Observable<any> {
+    return this.online$ = merge(
+      of(navigator.onLine),
+      fromEvent(window, 'online').pipe(mapTo(true)),
+      fromEvent(window, 'offline').pipe(mapTo(false))
+    ) 
   }
 
   private handleError(error: HttpErrorResponse) {

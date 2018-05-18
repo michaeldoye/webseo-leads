@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatCheckboxModule, MatDialogModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule, MatBottomSheetModule, MatTooltipModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, MatProgressSpinnerModule, MatProgressBarModule, MatSnackBarModule, MatBadgeModule, MatChipsModule, MatSelectModule } from '@angular/material';
+import { MatCheckboxModule, MatDialogModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule, MatBottomSheetModule, MatTooltipModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, MatProgressSpinnerModule, MatProgressBarModule, MatSnackBarModule, MatBadgeModule, MatChipsModule, MatSelectModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DatatableComponent } from './datatable/datatable.component';
 import { LeadsService } from './leads.service';
@@ -28,6 +28,9 @@ import { LoginComponent } from './user-actions/login/login.component';
 import { LeadStatsComponent } from './lead-stats/lead-stats.component';
 import { LeadCountsComponent } from './lead-stats/lead-counts/lead-counts.component';
 import { ScrollbarModule } from './scrollbar/scrollbar.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { LeadCalloutComponent } from './lead-callout/lead-callout.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +52,7 @@ import { ScrollbarModule } from './scrollbar/scrollbar.module';
     LoginComponent,
     LeadStatsComponent,
     LeadCountsComponent,
+    LeadCalloutComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,7 +87,8 @@ import { ScrollbarModule } from './scrollbar/scrollbar.module';
     MatBadgeModule,
     MatChipsModule,
     MatSelectModule,
-    ScrollbarModule
+    ScrollbarModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   entryComponents: [
     DataTableDialogComponent,
@@ -94,7 +99,8 @@ import { ScrollbarModule } from './scrollbar/scrollbar.module';
   ],
   providers: [
     LeadsService,
-    QuestionService
+    QuestionService,
+    //{provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 100000000, horizontalPosition: 'left'}}
   ],
   bootstrap: [AppComponent]
 })

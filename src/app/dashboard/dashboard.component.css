@@ -27,3 +27,8 @@ button.add-lead {
   bottom: 30px;
   right: 30px;
 }
+
+.fullscreen {
+  position: fixed;
+  z-index: 99;
+}

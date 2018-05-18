@@ -71,7 +71,7 @@
         <mat-cell fxFlex="45%" *matCellDef="let row">
           <ng-container *ngIf="row.tags">
             <mat-chip-list #chipList>
-              <mat-chip color="primary" *ngFor="let tag of getRowTags(row.tags)" [selectable]="true" [removable]="true" (removed)="removeTag(row, tag)">
+              <mat-chip [ngClass]="'tag tag-'+tag" color="primary" *ngFor="let tag of getRowTags(row.tags)" [selectable]="true" [removable]="true" (removed)="removeTag(row, tag)">
                 <span [style.cursor]="'pointer'" (click)="openTagDialog(row)">{{tag}}</span>
                 <mat-icon matTooltip="delete" matChipRemove>cancel</mat-icon>
               </mat-chip>
@@ -91,7 +91,7 @@
       </ng-container>     
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <mat-row [class.selected]="row.isChecked" *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
   </ms-scrollbar>
   

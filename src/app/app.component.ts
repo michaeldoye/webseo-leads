@@ -3,11 +3,12 @@ import { EditLeadComponent } from './datatable/edit-lead/edit-lead-dialog.compon
 import { MatDialog } from '@angular/material';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { StorageService } from './storage.service';
+import { WorkerService } from './worker.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'] 
 })
 export class AppComponent {
   title = 'app';
@@ -16,13 +17,15 @@ export class AppComponent {
 
   constructor(
     public dialog: MatDialog,
-    private storage: StorageService, 
+    private storage: StorageService,
+    private worker: WorkerService,
     public overlayContainer: OverlayContainer) {
       this.isDarkTheme = this.storage.get('isDarkTheme') || false;
       if (this.storage.get('isDarkTheme')) {
         this.overlayContainer
           .getContainerElement().classList.add('dark-theme');
       }
+      this.worker.checkForUpdates();
   }
 
   changeTheme(): void {

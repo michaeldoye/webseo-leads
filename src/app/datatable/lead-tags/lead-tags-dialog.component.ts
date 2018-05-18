@@ -5,6 +5,11 @@ import { LeadsService } from '../../leads.service';
 @Component({
   selector: 'lead-tags-dialog',
   templateUrl: 'lead-tags-dialog.component.html',
+  styles: [`
+    mat-list-option.selected {
+      background: #eaeaea;
+    }
+  `]
 })
 export class LeadTagsComponent implements OnInit {
 

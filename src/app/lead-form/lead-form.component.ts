@@ -60,9 +60,9 @@ export class DynamicFormComponent implements OnInit {
   }
 
   openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action, {
-      duration: 10000,
-    });
+    this.snackBar.open(message, action, 
+      {duration: 3000, horizontalPosition: 'left'}
+    );
   }  
 
 }

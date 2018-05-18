@@ -2,19 +2,19 @@
 
   <ng-container *ngIf="leads">
     <h2 [ngSwitch]="true" class="mat-display-1 lead-conversion-rate">
-      <span *ngSwitchCase="conversionRate >= 0 && conversionRate < 10">
+      <span *ngSwitchCase="conversionRate >= 0 && conversionRate <= 10">
         <mat-icon>sentiment_very_dissatisfied</mat-icon>
       </span>
-      <span *ngSwitchCase="conversionRate > 10 && conversionRate < 20">
+      <span *ngSwitchCase="conversionRate > 10 && conversionRate <= 20">
         <mat-icon>sentiment_dissatisfied</mat-icon>
       </span>
-      <span *ngSwitchCase="conversionRate > 20 && conversionRate < 30">
+      <span *ngSwitchCase="conversionRate > 20 && conversionRate <= 30">
         <mat-icon>sentiment_satisfied</mat-icon>
       </span>
-      <span *ngSwitchCase="conversionRate > 30 && conversionRate < 40">
+      <span *ngSwitchCase="conversionRate > 30 && conversionRate <= 40">
         <mat-icon>sentiment_satisfied_alt</mat-icon>
       </span>      
-      <span *ngSwitchCase="conversionRate > 40 && conversionRate < 500">
+      <span *ngSwitchCase="conversionRate > 40 && conversionRate <= 500">
         <mat-icon>sentiment_very_satisfied</mat-icon>
       </span>
     </h2>

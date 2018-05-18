@@ -1,0 +1,17 @@
+:host {
+  display: block;
+  margin-bottom: 20px;
+  padding: 10px;
+  font: 500 15px/20px Roboto, "Helvetica Neue", sans-serif;
+}
+
+:host mat-icon {
+  vertical-align: middle;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+:host.warn {
+  background: #fbe9e7;
+  color: #d50000;
+}
