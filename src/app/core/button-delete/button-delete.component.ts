@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { LeadsService, Leads } from '../../leads.service';
 import { MatDialog } from '@angular/material';
-import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '../../core/confirm-dialog/confirm-dialog.component';
+import { LeadsService } from '../../leads/leads.service';
 
 @Component({
   selector: 'app-button-delete',

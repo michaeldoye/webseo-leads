@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { StorageService } from '../../storage.service';
 import { MatSnackBar } from '@angular/material';
+import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-login',

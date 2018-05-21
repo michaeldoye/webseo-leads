@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, throwError, fromEvent, merge, of } from 'rxjs';
 import { catchError, retry, mapTo } from 'rxjs/operators';
@@ -30,17 +30,6 @@ export class LeadsService {
       );
   }
 
-  public dbGetLeadTags(id: number) {}
-
-  public saveNewLead(lead: Leads): Observable<any> {
-    if(!lead.tags) lead.tags = 'manual';
-    return this.http.get(`${this.api}/addnew/${JSON.stringify(lead)}`)
-      .pipe(
-        retry(3),
-        catchError(this.handleError)
-      );    
-  }
-
   public deleteLead(id: number): Observable<any> {
     return this.http.get(`${this.api}/delete/${id}`)
       .pipe(
@@ -55,6 +44,20 @@ export class LeadsService {
       fromEvent(window, 'online').pipe(mapTo(true)),
       fromEvent(window, 'offline').pipe(mapTo(false))
     ) 
+  }
+
+  public addLead(data: Leads): Observable<any> {
+    if(!data.tags) data.tags = 'manual';
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+    return this.http.post<Leads>('https://api.webseo.co.za/newlead', data, httpOptions)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      );
   }
 
   private handleError(error: HttpErrorResponse) {

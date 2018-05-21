@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { EditLeadComponent } from './datatable/edit-lead/edit-lead-dialog.component';
 import { MatDialog } from '@angular/material';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { StorageService } from './storage.service';
-import { WorkerService } from './worker.service';
+import { WorkerService } from './core/worker.service';
+import { StorageService } from './core/storage.service';
+import { EditLeadComponent } from './leads/datatable/edit-lead/edit-lead-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +20,7 @@ export class AppComponent {
     private storage: StorageService,
     private worker: WorkerService,
     public overlayContainer: OverlayContainer) {
+
       this.isDarkTheme = this.storage.get('isDarkTheme') || false;
       if (this.storage.get('isDarkTheme')) {
         this.overlayContainer

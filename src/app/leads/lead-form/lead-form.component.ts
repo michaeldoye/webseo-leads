@@ -37,7 +37,7 @@ export class DynamicFormComponent implements OnInit {
 
   onSubmit() {
     this.isLoading = true;
-    this.api.saveNewLead(this.form.value).subscribe(response => {
+    this.api.addLead(this.form.value).subscribe(response => {
       console.log(response);
       this.isLoading = false;
       if(response.response === 1) {

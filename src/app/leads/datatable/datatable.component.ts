@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges, SimpleChange, Output, EventEmitter } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource, MatDialog, MatBottomSheet, MatSortable, MatSnackBar } from '@angular/material';
 import { DatatableDataSource } from './datatable-datasource';
-import { LeadsService, Leads } from '../leads.service';
 import { DataTableDialogComponent } from './dialog/datatable-dialog.compnent';
 import { DataTableBottomSheet } from './bottom-sheet/data-table-bottom-sheet.component';
 import { LeadTagsComponent } from './lead-tags/lead-tags-dialog.component';
+import { LeadsService, Leads } from '../leads.service';
+
 
 @Component({
   selector: 'datatable',
@@ -52,9 +53,11 @@ export class DatatableComponent implements OnInit, OnChanges {
     this.api.isOnline().subscribe(isOnline => {
       if (isOnline) {
         this.isLoading = true;
-        this.api.dbGetLeads().subscribe((data: any) => {  
+        this.api.dbGetLeads().subscribe((data: any) => {
+          // Don't inlclude converted leads in table data
+          let filteredLeads = data.filter(lead => lead.tags.indexOf('is client') === -1); 
           this.allLeads = data;
-          this.dataSource = new MatTableDataSource(data);
+          this.dataSource = new MatTableDataSource(filteredLeads);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
           this.selectedLeads = [];

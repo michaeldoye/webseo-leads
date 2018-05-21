@@ -97,3 +97,13 @@ mat-chip {
 .mat-row.selected {
   background: rgba(239, 239, 239, 0.1803921568627451);
 }
+
+.mat-row, .mat-header-row {
+  min-width: 1100px;
+}
+
+@media only screen and (min-width:500px) and (max-width:1300px) {
+  .mat-cell, .mat-footer-cell {
+    font-size: 13px;
+  }  
+}

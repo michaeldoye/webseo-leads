@@ -1,4 +1,4 @@
-<div class="example-header" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="25px">
+<div class="example-header" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="25px">
   <div fxFlex="90%">
     <mat-form-field appearance="outline">
       <mat-label>Filter Leads</mat-label>
@@ -44,7 +44,7 @@
       <!-- Company Name Column -->
       <ng-container matColumnDef="companyName">
         <mat-header-cell fxFlex="15%" *matHeaderCellDef mat-sort-header>Company</mat-header-cell>
-        <mat-cell fxFlex="15%" *matCellDef="let row" (click)="openDialog(row)">{{row.companyName}}</mat-cell>
+        <mat-cell fxFlex="15%" *matCellDef="let row" (click)="openDialog(row)">{{row.companyName | slice:0:25}}</mat-cell>
       </ng-container>
 
       <!-- Person Name Column -->

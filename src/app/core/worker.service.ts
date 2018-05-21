@@ -14,18 +14,7 @@ export class WorkerService {
     }
   }
 
-  promptUser(e): void {
-    if(e.available) {
-      let snackBarRef = this.snackBar.open(
-        'A new version of the dashboard is available', 
-        'Update',
-        {duration: 1000000, horizontalPosition: 'left'}
-      );
-      snackBarRef.onAction().subscribe(data => document.location.reload());
-    }
-  }
-
-  checkForUpdates() {
+  public checkForUpdates() {
     if (this.updates.isEnabled) {
       this.updates.available.subscribe(event => {
         console.log('current version is', event.current);
@@ -38,5 +27,16 @@ export class WorkerService {
       });
     }    
   }
+
+  private promptUser(e): void {
+    if(e.available) {
+      let snackBarRef = this.snackBar.open(
+        'A new version of the dashboard is available', 
+        'Update',
+        {duration: 10000000, horizontalPosition: 'left'}
+      );
+      snackBarRef.onAction().subscribe(() => document.location.reload());
+    }
+  }  
 
 }

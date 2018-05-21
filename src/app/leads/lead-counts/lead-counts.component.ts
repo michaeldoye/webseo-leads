@@ -1,18 +1,18 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, SimpleChanges, Input } from '@angular/core';
 import { LeadsService, Leads } from '../leads.service';
 
 @Component({
-  selector: 'app-lead-stats',
-  templateUrl: './lead-stats.component.html',
-  styleUrls: ['./lead-stats.component.css']
+  selector: 'app-lead-counts',
+  templateUrl: './lead-counts.component.html',
+  styleUrls: ['./lead-counts.component.css']
 })
-export class LeadStatsComponent implements OnInit, OnChanges {
+export class LeadCountsComponent implements OnInit {
 
   @Input() public shouldRefresh: boolean;
 
   public leadsCount: number;
   public leads: Leads[];
-  public isLoading: boolean;
+  public isLoading: boolean;  
 
   constructor(private leadService: LeadsService) { }
 
@@ -34,10 +34,6 @@ export class LeadStatsComponent implements OnInit, OnChanges {
     });
   }
 
-  public get convertedLeads(): Leads[] {
-    return this.leads.filter(lead => lead.tags.indexOf('is client') > -1);
-  }
-
   public get seoLeads(): Leads[] {
     return this.leads.filter(lead => lead.tags.indexOf('seo') > -1);
   }
@@ -48,14 +44,14 @@ export class LeadStatsComponent implements OnInit, OnChanges {
 
   public get socialLeads(): Leads[] {
     return this.leads.filter(lead => lead.tags.indexOf('social') > -1);
-  }
+  } 
 
-  public get conversionRate(): number {
-    return this.convertedLeads.length / this.leadsCount * 100;
+  public get ppcLeads(): Leads[] {
+    return this.leads.filter(lead => lead.tags.indexOf('ppc') > -1);
   }
-
-  public get conversionTooltip(): string {
-    return `Out of ${this.leadsCount} leads, so far ${this.convertedLeads.length} have converted into clients`;
+  
+  public percentageOfAllLeads(percentageOf: number, divideInto: number): number {
+    return percentageOf / divideInto * 100;
   }
 
 }

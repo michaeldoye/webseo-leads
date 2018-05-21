@@ -1,6 +1,5 @@
 import { Component, Inject } from '@angular/core';
 import { MatBottomSheet, MatBottomSheetRef, MatDialog, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
-import { Leads } from '../../leads.service';
 import { LeadTagsComponent } from '../lead-tags/lead-tags-dialog.component';
 import { EditLeadComponent } from '../edit-lead/edit-lead-dialog.component';
 
@@ -33,7 +32,6 @@ export class DataTableBottomSheet {
 
   openEditDialog(): void {
     let dialogRef = this.dialog.open(EditLeadComponent, {
-      //panelClass: 'my-full-screen-dialog',
       width: '750px',
       data: {data: this.data.data}
     });

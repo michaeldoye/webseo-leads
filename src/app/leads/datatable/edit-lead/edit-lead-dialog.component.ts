@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { LeadsService, Leads } from '../../leads.service';
 import { QuestionService } from '../../lead-form/question.service';
+import { LeadsService } from '../../leads.service';
 
 @Component({
   selector: 'lead-edit-dialog',

@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
-import { Leads } from '../../leads.service';
 import { EditLeadComponent } from '../edit-lead/edit-lead-dialog.component';
 import { LeadTagsComponent } from '../lead-tags/lead-tags-dialog.component';
+import { Leads } from '../../leads.service';
 
 @Component({
   selector: 'datatable-dialog',
