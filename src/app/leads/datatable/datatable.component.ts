@@ -1,10 +1,14 @@
 import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges, SimpleChange, Output, EventEmitter } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource, MatDialog, MatBottomSheet, MatSortable, MatSnackBar } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, MatDialog, MatBottomSheet, MatSortable, MatSnackBar, MatIconRegistry } from '@angular/material';
 import { DatatableDataSource } from './datatable-datasource';
 import { DataTableDialogComponent } from './dialog/datatable-dialog.compnent';
 import { DataTableBottomSheet } from './bottom-sheet/data-table-bottom-sheet.component';
 import { LeadTagsComponent } from './lead-tags/lead-tags-dialog.component';
 import { LeadsService, Leads } from '../leads.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { StorageService } from '../../core/storage.service';
+import { Observable, fromEvent, merge, of } from 'rxjs';
+import { mapTo } from 'rxjs/operators';
 
 
 @Component({
@@ -15,6 +19,7 @@ import { LeadsService, Leads } from '../leads.service';
 export class DatatableComponent implements OnInit, OnChanges {
 
   @Input() shouldRefresh: boolean;
+  @Input() tableHeight: string;
   @Output() onRefresh = new EventEmitter<boolean>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -27,21 +32,30 @@ export class DatatableComponent implements OnInit, OnChanges {
 
   checkAll: any;
   selectedLeads: Array<number> = [];
+
   isLoading: boolean = false;
+  shouldCloseSnackBar: boolean;
 
   tagFilter: any = '';
 
   constructor(
-    private api: LeadsService, 
+    public api: LeadsService, 
     public dialog: MatDialog, 
     public snackBar: MatSnackBar,
+    public iconRegistry: MatIconRegistry, 
+    public sanitizer: DomSanitizer,
+    public storage: StorageService,
     private bottomSheet: MatBottomSheet) {
 
       this.dataSource = new MatTableDataSource();
+      let lableIcon = sanitizer.bypassSecurityTrustResourceUrl('assets/baseline-label-24px.svg');
+      let lableIconOff = sanitizer.bypassSecurityTrustResourceUrl('assets/baseline-label_off-24px.svg');
+      iconRegistry.addSvgIcon('label', lableIcon);
+      iconRegistry.addSvgIcon('label_off', lableIconOff);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes.firstChange) return;
+    if(changes.firstChange || changes.tableHeight) return;
     this.getTableData();
   }
 
@@ -50,33 +64,42 @@ export class DatatableComponent implements OnInit, OnChanges {
   }
 
   getTableData(): void {
-    this.api.isOnline().subscribe(isOnline => {
-      if (isOnline) {
-        this.isLoading = true;
-        this.api.dbGetLeads().subscribe((data: any) => {
-          // Don't inlclude converted leads in table data
-          let filteredLeads = data.filter(lead => lead.tags.indexOf('is client') === -1); 
-          this.allLeads = data;
-          this.dataSource = new MatTableDataSource(filteredLeads);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-          this.selectedLeads = [];
-          this.tagFilter = '';
-          this.isLoading = false;
-          this.onRefresh.emit(true);
-        }, error => {
-          console.log(error);
-          this.isLoading = false;
-        }); 
-      } else {
-        console.log('not online, should fetch from cache');
-        let snackBarRef = this.snackBar.open(
-          'Offline, check network connection', 
-          'OK', 
-          {duration: 1000000, horizontalPosition: 'left'}
-        );
-      }
-    });   
+    this.isLoading = true;
+    if (this.api.checkNetworkStatus) {
+
+      this.api.dbGetLeads().subscribe((data: any) => {
+        this.initializeTable(data);
+      }, error => {
+        console.log(error);
+        this.isLoading = false;
+      }); 
+
+    } else {
+
+      this.handleTableOfflineError();
+    }   
+  }
+
+  private initializeTable(data): void {
+    let filteredLeads = data.filter(lead => {
+      return lead.tags.indexOf('is client') === -1}); 
+    this.allLeads = data;
+    this.dataSource = new MatTableDataSource(filteredLeads);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.selectedLeads = [];
+    this.tagFilter = '';
+    this.storage.set('tableData', filteredLeads);
+    this.isLoading = false;
+    this.onRefresh.emit(true);
+  }
+
+  private handleTableOfflineError(): void {
+    let cachedLeads = this.storage.get('tableData');
+    this.dataSource = new MatTableDataSource(cachedLeads);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;  
+    this.isLoading = false;
   }
 
   applyFilter(filterValue: string): void {
@@ -134,6 +157,7 @@ export class DatatableComponent implements OnInit, OnChanges {
   }
 
   removeTag(rowData: Leads, tag: string) {
+    if (!this.api.checkNetworkStatus) return;
     let alltags = this.getRowTags(rowData.tags);
     let tags = alltags.filter(t => t !== tag);
     this.api.dbAddTagToLead(tags.toString(), rowData.id)
@@ -143,11 +167,11 @@ export class DatatableComponent implements OnInit, OnChanges {
 
 
   openTagDialog(rowData: Leads): void {
+    if (!this.api.checkNetworkStatus) return;
     let dialogRef = this.dialog.open(LeadTagsComponent, {
       width: '500px',
       data: {data: rowData}
     });
-
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.getTableData();
@@ -167,5 +191,7 @@ export class DatatableComponent implements OnInit, OnChanges {
       this.dataSource.sort = this.sort;
     }
   }
+
+
 
 }

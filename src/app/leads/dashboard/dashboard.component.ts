@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { EditLeadComponent } from '../datatable/edit-lead/edit-lead-dialog.component';
+import { LeadsService } from '../leads.service';
 
 @Component({
   selector: 'dashboard',
@@ -17,8 +18,9 @@ export class DashboardComponent {
   isFullScreen: boolean = false;
   doRefresh: boolean = false;
   maybeUpdate: boolean = false;
+  tableHeight: string = '635px';
 
-  constructor(public dialog: MatDialog) {} 
+  constructor(public dialog: MatDialog, public leadService: LeadsService) {} 
 
   openDialog(): void {
     let dialogRef = this.dialog.open(EditLeadComponent, {
@@ -34,5 +36,11 @@ export class DashboardComponent {
 
   toggleFullScreen(): void {
     this.isFullScreen = !this.isFullScreen;
+    if (this.isFullScreen) {
+      this.tableHeight = 'calc(100vh - 220px)';
+    }
+    else {
+      this.tableHeight = '635px';
+    }
   }
 }

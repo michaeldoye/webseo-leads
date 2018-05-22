@@ -1,4 +1,4 @@
-<button mat-icon-button matTooltip="delete" (click)="confrimDelete()">
+<button [disabled]="!api.checkNetworkStatus" mat-icon-button matTooltip="delete" (click)="confrimDelete()">
   
   <mat-icon aria-label="remove lead"
     [matBadgeHidden]="leadsToDelete.length <= 1" 
@@ -7,4 +7,4 @@
     matBadgeColor="warn">delete
   </mat-icon>
 
-  </button>
+</button>

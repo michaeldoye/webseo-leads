@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, throwError, fromEvent, merge, of } from 'rxjs';
-import { catchError, retry, mapTo } from 'rxjs/operators';
+import { catchError, retry, mapTo, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,19 +11,30 @@ export class LeadsService {
 
   private api: string = 'https://api.webseo.co.za/leads'
   private online$: Observable<boolean>;
+  public isOnline: boolean;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.online$ = merge(
+      of(navigator.onLine),
+      fromEvent(window, 'online').pipe(mapTo(true)),
+      fromEvent(window, 'offline').pipe(mapTo(false))
+    )
+    this.online$.subscribe((networkStatus) => {
+      this.isOnline = networkStatus;
+      console.log(networkStatus);
+    });    
+  }
 
   public dbGetLeads(): Observable<Leads> {
     return this.http.get<Leads>(this.api)
       .pipe(
         retry(3),
         catchError(this.handleError)
-      );
+      )
   }
 
   public dbAddTagToLead(tag: string, id: number): Observable<any> {
-    return this.http.get<any>(`${this.api}/add/${tag}/${id}`)
+    return this.http.get<any>(`${this.api}/add/${tag ? tag+'/' : ''}${id}`)
       .pipe(
         retry(3),
         catchError(this.handleError)
@@ -38,12 +49,8 @@ export class LeadsService {
       );
   }
 
-  public isOnline(): Observable<any> {
-    return this.online$ = merge(
-      of(navigator.onLine),
-      fromEvent(window, 'online').pipe(mapTo(true)),
-      fromEvent(window, 'offline').pipe(mapTo(false))
-    ) 
+  public get checkNetworkStatus(): boolean {
+    return this.isOnline; 
   }
 
   public addLead(data: Leads): Observable<any> {

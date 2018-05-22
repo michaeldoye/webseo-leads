@@ -14,7 +14,7 @@ export class ButtonDeleteComponent implements OnInit {
   @Output() onDelete = new EventEmitter<boolean>();
 
   constructor(
-    private api: LeadsService, 
+    public api: LeadsService, 
     public dialog: MatDialog) { }
 
   ngOnInit() {

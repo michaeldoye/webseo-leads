@@ -1,9 +1,11 @@
 <div class="example-container" [class.light-blue-theme]="!isDarkTheme" [class.dark-theme]="isDarkTheme">
   <mat-toolbar class="main-toolbar" color="primary">
+    
     <span>Leads Dashboard</span>
     <span fxFlex></span>
 
-    <button *ngIf="isLoggedIn"
+    <button [disabled]="!leadService.checkNetworkStatus"
+      *ngIf="isLoggedIn"
       matTooltip="New Lead" 
       (click)="openDialog()"
       mat-icon-button>
@@ -32,7 +34,12 @@
     </button>    
 
   </mat-toolbar>
+
   <app-login *ngIf="!isLoggedIn" (onLogin)="checkLogin()" fxLayout="row" fxLayoutAlign="center center" fxFill></app-login>
   <dashboard *ngIf="isLoggedIn"></dashboard>
+
+  <div *ngIf="!leadService.checkNetworkStatus" [@fadeInOut] class="offline-notification">
+    <mat-icon>offline_bolt</mat-icon> Offline, some functionality has been disabled.
+  </div>
 </div>
 

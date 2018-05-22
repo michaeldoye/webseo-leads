@@ -2,13 +2,13 @@
   <span>Lead Details for {{leadData.personName}}</span>&nbsp;<span [matTooltip]="leadData.companyName" *ngIf="leadData.companyName">({{leadData.companyName | slice:0:25}})</span>
   <span fxFlex></span>
   <app-button-delete [leadsToDelete]="[leadData.id]" (onDelete)="this.dialog.closeAll()"></app-button-delete>
-  <button mat-icon-button matTooltip="email" (click)="openLink(leadData)">
+  <button [disabled]="!leadService.checkNetworkStatus" mat-icon-button matTooltip="email" (click)="openLink(leadData)">
     <mat-icon matListIcon aria-label="menu">send</mat-icon>
   </button>   
-  <button mat-icon-button matTooltip="tags" (click)="openTagDialog()">
+  <button [disabled]="!leadService.checkNetworkStatus" mat-icon-button matTooltip="tags" (click)="openTagDialog()">
     <mat-icon matListIcon aria-label="menu">label</mat-icon>
   </button>  
-  <button mat-icon-button matTooltip="edit" (click)="openDialog()">
+  <button [disabled]="!leadService.checkNetworkStatus" mat-icon-button matTooltip="edit" (click)="openDialog()">
     <mat-icon matListIcon aria-label="menu">edit</mat-icon>
   </button>  
   <button mat-icon-button matTooltip="close" mat-dialog-close>

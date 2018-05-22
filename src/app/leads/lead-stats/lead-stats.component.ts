@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { LeadsService, Leads } from '../leads.service';
+import { StorageService } from '../../core/storage.service';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class LeadStatsComponent implements OnInit, OnChanges {
   public leads: Leads[];
   public isLoading: boolean;
 
-  constructor(private leadService: LeadsService) { }
+  constructor(private leadService: LeadsService, public storage: StorageService) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if(changes.firstChange) return;
@@ -28,11 +29,19 @@ export class LeadStatsComponent implements OnInit, OnChanges {
 
   private allLeads(): void {
     this.isLoading = true;
-    this.leadService.dbGetLeads().subscribe((data: any) => {
-      this.leadsCount = data.length;
-      this.leads = data;
+    if (this.leadService.checkNetworkStatus) {
+      this.leadService.dbGetLeads()
+        .subscribe((data: any) => {
+          this.leadsCount = data.length;
+          this.leads = data;
+          this.isLoading = false;
+        });
+    }
+    else {
+      this.leads = this.storage.get('leads') || [];
+      this.leadsCount = this.leads.length;
       this.isLoading = false;
-    });
+    }
   }
 
   public get convertedLeads(): Leads[] {

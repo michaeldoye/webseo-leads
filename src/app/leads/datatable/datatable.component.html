@@ -1,4 +1,5 @@
 <div class="example-header" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="25px">
+
   <div fxFlex="90%">
     <mat-form-field appearance="outline">
       <mat-label>Filter Leads</mat-label>
@@ -6,17 +7,27 @@
       <mat-icon matPrefix>filter_list</mat-icon>
     </mat-form-field>
   </div>
+
   <div class="tag-filter" fxFlex="10%">
-    <mat-form-field>
-      <mat-select [(value)]="tagFilter" placeholder="Filter by tag" (selectionChange)="onTagFilterChange($event)"> 
-        <mat-option value="">None</mat-option>
-        <mat-option *ngFor="let tag of allTags" [value]="tag">{{tag}}</mat-option>
+    <mat-form-field appearance="outline">
+      <mat-label>Filter by tag</mat-label>
+      <mat-select [disabled]="!api.checkNetworkStatus" [(value)]="tagFilter" (selectionChange)="onTagFilterChange($event)" disableRipple> 
+        <mat-option value=""> <mat-icon svgIcon="label_off"></mat-icon> None</mat-option>
+        <mat-option *ngFor="let tag of allTags" [value]="tag"> 
+          <mat-icon svgIcon="label"></mat-icon> 
+          {{tag}}
+        </mat-option>
       </mat-select>
     </mat-form-field>    
   </div>
+
   <div fxFlex="8%" class="delete-lead">
-    <app-button-delete *ngIf="selectedLeads.length > 0" [leadsToDelete]="selectedLeads" (onDelete)="getTableData()"></app-button-delete>
-    <button mat-icon-button matTooltip="refresh" (click)="getTableData()">
+    <app-button-delete 
+      *ngIf="selectedLeads.length > 0" 
+      [leadsToDelete]="selectedLeads" 
+      (onDelete)="getTableData()">
+    </app-button-delete>
+    <button [disabled]="!api.checkNetworkStatus" mat-icon-button matTooltip="refresh" (click)="getTableData()">
       <mat-icon>refresh</mat-icon>
     </button>
   </div>
@@ -24,51 +35,45 @@
 
 <div> 
   <ms-scrollbar>
-    <mat-table style="height: 635px;" #table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc" aria-label="Elements">
+    <mat-table [style.height]="tableHeight" #table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc" aria-label="Elements">
 
       <ng-container matColumnDef="checkbox">
-        <mat-header-cell fxFlex="5%" *matHeaderCellDef> 
-          <mat-checkbox [(ngModel)]="checkAll" [checked]="isAllChecked()" (ngModelChange)="doCheckAll(checkAll)"></mat-checkbox>  
+        <mat-header-cell fxHide.xs="true" fxFlex="5%" *matHeaderCellDef> 
+          <mat-checkbox [disabled]="!api.checkNetworkStatus" [(ngModel)]="checkAll" [checked]="isAllChecked()" (ngModelChange)="doCheckAll(checkAll)"></mat-checkbox>  
         </mat-header-cell>
-        <mat-cell fxFlex="5%" *matCellDef="let row;"> 
-          <mat-checkbox [(ngModel)]="row.isChecked" [value]="row.id" (ngModelChange)="doSinglePostSelection(row.id, row.isChecked)"></mat-checkbox>      
+        <mat-cell fxHide.xs="true" fxFlex="5%" *matCellDef="let row;"> 
+          <mat-checkbox [disabled]="!api.checkNetworkStatus" [(ngModel)]="row.isChecked" [value]="row.id" (ngModelChange)="doSinglePostSelection(row.id, row.isChecked)"></mat-checkbox>      
         </mat-cell>
       </ng-container>    
 
       <!-- Id Column -->
       <ng-container matColumnDef="id">
-        <mat-header-cell fxFlex="5%" *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
-        <mat-cell fxFlex="5%" *matCellDef="let row" (click)="openDialog(row)">{{row.id}}</mat-cell>
+        <mat-header-cell fxHide.xs="true" fxFlex="5%" *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+        <mat-cell fxHide.xs="true" fxFlex="5%" *matCellDef="let row" (click)="openDialog(row)">{{row.id}}</mat-cell>
       </ng-container>
 
       <!-- Company Name Column -->
       <ng-container matColumnDef="companyName">
-        <mat-header-cell fxFlex="15%" *matHeaderCellDef mat-sort-header>Company</mat-header-cell>
-        <mat-cell fxFlex="15%" *matCellDef="let row" (click)="openDialog(row)">{{row.companyName | slice:0:25}}</mat-cell>
+        <mat-header-cell fxFlex="15%" fxFlex.xs="80%" *matHeaderCellDef mat-sort-header>Company</mat-header-cell>
+        <mat-cell fxFlex="15%" fxFlex.xs="80%" *matCellDef="let row" (click)="openDialog(row)">{{row.companyName | slice:0:25}}</mat-cell>
       </ng-container>
 
       <!-- Person Name Column -->
       <ng-container matColumnDef="personName">
-        <mat-header-cell fxFlex="15%" *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-        <mat-cell fxFlex="15%" *matCellDef="let row" (click)="openDialog(row)">{{row.personName}}</mat-cell>
+        <mat-header-cell fxHide.xs="true" fxFlex="15%" *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+        <mat-cell fxHide.xs="true" fxFlex="15%" *matCellDef="let row" (click)="openDialog(row)">{{row.personName}}</mat-cell>
       </ng-container>
 
       <!-- Email Column -->
       <ng-container matColumnDef="emailAddress">
-        <mat-header-cell fxFlex="20%" *matHeaderCellDef mat-sort-header>Email Address</mat-header-cell>
-        <mat-cell fxFlex="20%" *matCellDef="let row" (click)="openDialog(row)">{{row.emailAddress}}</mat-cell>
+        <mat-header-cell fxHide.xs="true" fxFlex="20%" *matHeaderCellDef mat-sort-header>Email Address</mat-header-cell>
+        <mat-cell fxHide.xs="true" fxFlex="20%" *matCellDef="let row" (click)="openDialog(row)">{{row.emailAddress}}</mat-cell>
       </ng-container>
-
-      <!-- Number Column -->
-      <!-- <ng-container matColumnDef="contactNumber">
-        <mat-header-cell fxFlex="10%" *matHeaderCellDef mat-sort-header>Contact Number</mat-header-cell>
-        <mat-cell fxFlex="10%" *matCellDef="let row" (click)="openDialog(row)">{{row.contactNumber}}</mat-cell>
-      </ng-container>     -->
 
       <!-- Tags Column -->
       <ng-container matColumnDef="tags">
-        <mat-header-cell fxFlex="45%" *matHeaderCellDef mat-sort-header>Tags</mat-header-cell>
-        <mat-cell fxFlex="45%" *matCellDef="let row">
+        <mat-header-cell fxHide.xs="true" fxFlex="45%" *matHeaderCellDef mat-sort-header>Tags</mat-header-cell>
+        <mat-cell fxHide.xs="true" fxFlex="45%" *matCellDef="let row">
           <ng-container *ngIf="row.tags">
             <mat-chip-list #chipList>
               <mat-chip [ngClass]="'tag tag-'+tag" color="primary" *ngFor="let tag of getRowTags(row.tags)" [selectable]="true" [removable]="true" (removed)="removeTag(row, tag)">
@@ -82,8 +87,8 @@
       
       <!-- Actions Column -->
       <ng-container matColumnDef="actions">
-        <mat-header-cell fxFlex="5%" *matHeaderCellDef mat-sort-header> Actions </mat-header-cell>
-        <mat-cell fxFlex="5%" *matCellDef="let row">
+        <mat-header-cell fxFlex="5%" fxFlex.xs="20%" *matHeaderCellDef mat-sort-header> Actions </mat-header-cell>
+        <mat-cell fxFlex="5%" fxFlex.xs="20%" *matCellDef="let row">
           <button mat-icon-button matTooltip="Options" (click)="openBottomSheet(row)">
             <mat-icon aria-label="menu">more_horiz</mat-icon>
           </button>

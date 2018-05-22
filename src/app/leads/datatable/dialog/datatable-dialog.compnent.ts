@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { EditLeadComponent } from '../edit-lead/edit-lead-dialog.component';
 import { LeadTagsComponent } from '../lead-tags/lead-tags-dialog.component';
-import { Leads } from '../../leads.service';
+import { Leads, LeadsService } from '../../leads.service';
 
 @Component({
   selector: 'datatable-dialog',
@@ -17,6 +17,7 @@ export class DataTableDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<DataTableDialogComponent>,
     public dialog: MatDialog,
+    public leadService: LeadsService,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   onNoClick(): void {
