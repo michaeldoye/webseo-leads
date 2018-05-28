@@ -5,7 +5,9 @@ import { QuestionBase }     from './question-base';
 import { TextboxQuestion }  from './question-textbox';
 import { DateQuestion } from './question-date';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class QuestionService {
 
   // TODO: get from a remote source of question metadata
