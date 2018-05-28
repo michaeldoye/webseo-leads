@@ -19,9 +19,5 @@
     <span mat-line>Make changes to this lead</span>
   </a>
 
-  <a href="javascript:void(0)" mat-list-item (click)="openDialog()">
-    <mat-icon matListIcon>delete</mat-icon>
-    <span mat-line>Delete lead</span>
-    <span mat-line>Permanantly remove this lead</span>
-  </a>
+  <app-button-delete [isBottomSheetButton]="true" [leadsToDelete]="[data.data.id]" (onDelete)="bottomSheetRef.dismiss();"></app-button-delete>
 </mat-nav-list>

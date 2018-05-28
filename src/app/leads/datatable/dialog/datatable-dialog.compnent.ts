@@ -42,13 +42,13 @@ export class DataTableDialogComponent implements OnInit {
 
   openTagDialog(): void {
     let dialogRef = this.dialog.open(LeadTagsComponent, {
-      width: '500px',
+      width: '600px',
       data: {data: this.leadData}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.dialogRef.close();
+      //this.dialogRef.close();
     });
   }
 

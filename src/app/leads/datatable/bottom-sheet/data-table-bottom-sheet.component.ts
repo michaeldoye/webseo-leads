@@ -9,7 +9,7 @@ import { EditLeadComponent } from '../edit-lead/edit-lead-dialog.component';
 })
 
 export class DataTableBottomSheet {
-  constructor(private bottomSheetRef: MatBottomSheetRef<DataTableBottomSheet>, 
+  constructor(public bottomSheetRef: MatBottomSheetRef<DataTableBottomSheet>, 
     public dialog: MatDialog,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any) {}
 
@@ -42,4 +42,4 @@ export class DataTableBottomSheet {
     });
   }  
   
-}
+} 

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { LeadsService, Leads } from '../leads.service';
 import { StorageService } from '../../core/storage.service';
+import * as moment from 'moment';
 
 
 @Component({
@@ -66,6 +67,12 @@ export class LeadStatsComponent implements OnInit, OnChanges {
 
   public get conversionTooltip(): string {
     return `Out of ${this.leadsCount} leads, so far ${this.convertedLeads.length} have converted into clients`;
+  }
+
+  public get lastLeadDateFromNow(): string {
+    let leadsWithDates = this.leads.filter(lead => lead.leadDate !== '');
+    let moments = leadsWithDates.map(lead => moment(lead.leadDate));
+    return `last lead received ${moment.max(moments).fromNow()}`;   
   }
 
 }

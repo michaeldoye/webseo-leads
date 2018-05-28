@@ -1,4 +1,4 @@
-<button [disabled]="!api.checkNetworkStatus" mat-icon-button matTooltip="delete" (click)="confrimDelete()">
+<button *ngIf="!isBottomSheetButton" [disabled]="!api.checkNetworkStatus" mat-icon-button matTooltip="delete" (click)="confrimDelete()">
   
   <mat-icon aria-label="remove lead"
     [matBadgeHidden]="leadsToDelete.length <= 1" 
@@ -8,3 +8,9 @@
   </mat-icon>
 
 </button>
+
+<a *ngIf="isBottomSheetButton" href="javascript:void(0)" mat-list-item (click)="confrimDelete()">
+  <mat-icon matListIcon>delete</mat-icon>
+  <span mat-line>Delete lead</span>
+  <span mat-line>Permanantly remove this lead</span>
+</a>

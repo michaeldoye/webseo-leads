@@ -1,5 +1,7 @@
 <mat-toolbar style="display:flex" mat-dialog-title>
-  <span>Lead Tags</span>
+  <span>Lead Tags 
+  <span fxFlex></span>
+  <span [style.font-size]="'13px'">({{data.data.companyName ? data.data.companyName : data.data.personName}})</span></span>
   <span fxFlex></span>
   <button mat-icon-button matTooltip="Close" mat-dialog-close>
     <mat-icon matListIcon aria-label="menu">close</mat-icon>
@@ -7,12 +9,30 @@
 </mat-toolbar>
 
 <div mat-dialog-content>
-  <mat-selection-list #tags [(ngModel)]="selectedTags" (ngModelChange)="addTagToLead(tags, currentId)">
-    <mat-list-option [class.selected]="selectedTags.toString().indexOf(tag) > -1" *ngFor="let tag of allTags; let index = index" [value]="tag">
-      {{tag}}
-      <mat-divider></mat-divider>
-    </mat-list-option>
-  </mat-selection-list>
+
+
+  <mat-tab-group>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon [style.vertical-align]="'middle'">label</mat-icon> &nbsp; General Tags
+      </ng-template>      
+      <mat-selection-list #tags [(ngModel)]="selectedTags" (ngModelChange)="addTagToLead(tags, currentId)">
+        <mat-list-option [class.selected]="selectedTags.toString().indexOf(tag) > -1" *ngFor="let tag of allTags; let index = index" [value]="tag">
+          <span><mat-icon [style.vertical-align]="'middle'">label</mat-icon> {{tag}}</span>
+          <mat-divider></mat-divider>
+        </mat-list-option>
+      </mat-selection-list>      
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon [style.vertical-align]="'middle'">code</mat-icon> &nbsp; Custom Tags
+      </ng-template>       
+      <p>Create some custom tags for this lead</p>
+      <app-input-add-tag [currentTags]="selectedTags" (onAddTag)="addTagFromInput($event, currentId)"></app-input-add-tag>      
+    </mat-tab>
+  </mat-tab-group>
+
 </div>
 
 <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">

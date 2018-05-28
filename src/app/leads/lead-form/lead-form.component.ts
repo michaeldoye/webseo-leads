@@ -6,6 +6,7 @@ import { QuestionControlService }    from './question-control.service';
 import { LeadsService } from '../leads.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
 
+
 @Component({
   selector: 'app-dynamic-form',
   templateUrl: './lead-form.component.html',
@@ -37,8 +38,8 @@ export class DynamicFormComponent implements OnInit {
 
   onSubmit() {
     this.isLoading = true;
+    this.form.value.leadDate = new Date();
     this.api.addLead(this.form.value).subscribe(response => {
-      console.log(response);
       this.isLoading = false;
       if(response.response === 1) {
         this.openSnackBar('Sucess! Lead Added', 'OK');

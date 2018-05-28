@@ -41,8 +41,13 @@ export class LeadsService {
       );
   }
 
-  public deleteLead(id: number): Observable<any> {
-    return this.http.get(`${this.api}/delete/${id}`)
+  public deleteLead(toDelete: any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };    
+    return this.http.post(`${this.api}/delete`, toDelete, httpOptions)
       .pipe(
         retry(3),
         catchError(this.handleError)

@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { ConfirmDialogComponent } from '../../core/confirm-dialog/confirm-dialog.component';
 import { LeadsService } from '../../leads/leads.service';
 
@@ -8,29 +8,26 @@ import { LeadsService } from '../../leads/leads.service';
   templateUrl: './button-delete.component.html',
   styleUrls: ['./button-delete.component.css']
 })
-export class ButtonDeleteComponent implements OnInit {
+export class ButtonDeleteComponent {
 
   @Input() leadsToDelete: Array<any>; 
+  @Input() isBottomSheetButton: boolean;
   @Output() onDelete = new EventEmitter<boolean>();
 
   constructor(
     public api: LeadsService, 
+    public snackbar: MatSnackBar,
     public dialog: MatDialog) { }
 
-  ngOnInit() {
-  }
-
   removeLead() {
-    this.leadsToDelete.forEach((id: number) => {
-      this.api.deleteLead(id)
-        .subscribe(data => {
-          console.log(data);
-          this.leadsToDelete = [];
-          this.onDelete.emit(true);
-        }, 
-        error => {
-          console.log(error);
-        });
+    let dataToDelete = {leads: this.leadsToDelete};
+    this.api.deleteLead(dataToDelete).subscribe(data => {
+      this.leadsToDelete = [];
+      this.onDelete.emit(true);
+      this.snackbar.open('Sucessfully Deleted', 'OK', 
+        {duration: 3000, horizontalPosition: 'left'})}, 
+    error => {
+      console.log(error);
     });
   }
 

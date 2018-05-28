@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { MatChipInputEvent } from '@angular/material';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
+import { Leads } from '../../leads/leads.service';
 
 @Component({
   selector: 'app-input-add-tag',
   templateUrl: './input-add-tag.component.html',
   styleUrls: ['./input-add-tag.component.css']
 })
-export class InputAddTagComponent implements OnInit {
+export class InputAddTagComponent {
 
-  ngOnInit(): void {}
+  @Input() currentTags: Array<any>;
+  @Output() onAddTag = new EventEmitter< Array<any> >();
 
   visible: boolean = true;
   selectable: boolean = true;
@@ -19,21 +21,17 @@ export class InputAddTagComponent implements OnInit {
   // Enter, comma
   separatorKeysCodes = [ENTER, COMMA];
 
-  fruits = [
-    { name: 'Lemon' },
-    { name: 'Lime' },
-    { name: 'Apple' },
-  ];
-
-
   add(event: MatChipInputEvent): void {
     let input = event.input;
     let value = event.value;
 
     // Add our fruit
     if ((value || '').trim()) {
-      this.fruits.push({ name: value.trim() });
+      this.currentTags.push(value.trim());
     }
+
+    // Emit tags
+    this.onAddTag.emit(this.currentTags);
 
     // Reset the input value
     if (input) {
@@ -41,12 +39,15 @@ export class InputAddTagComponent implements OnInit {
     }
   }
 
-  remove(fruit: any): void {
-    let index = this.fruits.indexOf(fruit);
+  remove(tag: any): void {
+    let index = this.currentTags.indexOf(tag);
 
     if (index >= 0) {
-      this.fruits.splice(index, 1);
+      this.currentTags.splice(index, 1);
     }
+
+    // Emit tags
+    this.onAddTag.emit(this.currentTags);    
   }
 
 }

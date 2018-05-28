@@ -31,7 +31,6 @@ import { trigger, state, style, transition, group, animate } from '@angular/anim
 })
 export class AppComponent {
 
-  title = 'app';
   isDarkTheme: boolean;
   isLoggedIn: boolean = this.storage.get('loggedIn') || false;
 

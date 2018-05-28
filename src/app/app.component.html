@@ -3,35 +3,28 @@
     
     <span>Leads Dashboard</span>
     <span fxFlex></span>
-
-    <button [disabled]="!leadService.checkNetworkStatus"
-      *ngIf="isLoggedIn"
-      matTooltip="New Lead" 
-      (click)="openDialog()"
-      mat-icon-button>
+    
+    <button mat-icon-button matTooltip="More" [matMenuTriggerFor]="menu" *ngIf="isLoggedIn">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item [disabled]="!leadService.checkNetworkStatus" (click)="openDialog()">
         <mat-icon>add</mat-icon>
-    </button>
-
-    <button *ngIf="isDarkTheme && isLoggedIn" 
-      matTooltip="Light theme"  
-      mat-icon-button 
-      (click)="changeTheme()">
-        <mat-icon>wb_sunny</mat-icon>
-    </button>
-
-    <button *ngIf="!isDarkTheme && isLoggedIn" 
-      matTooltip="Dark theme" 
-      mat-icon-button 
-      (click)="changeTheme()">
-        <mat-icon>brightness_3</mat-icon>
-    </button>
-
-    <button *ngIf="isLoggedIn"
-      matTooltip="Logout" 
-      (click)="logOut()"
-      mat-icon-button>
+        <span>New Lead</span>
+      </button>      
+      <button mat-menu-item (click)="logOut()">
         <mat-icon>exit_to_app</mat-icon>
-    </button>    
+        <span>Sign Out</span>
+      </button>
+      <button mat-menu-item>
+        <mat-slide-toggle
+          [checked]="isDarkTheme"
+          color="primary"
+          (change)="changeTheme()">
+          Dark Theme
+        </mat-slide-toggle>
+      </button>      
+    </mat-menu>    
 
   </mat-toolbar>
 

@@ -81,8 +81,8 @@ span.tag:hover {
 }
 
 mat-chip {
-  padding-bottom: 3px!important;
-  padding-top: 3px!important;
+  padding-bottom: 4px!important;
+  padding-top: 4px!important;
 }
 
 .mat-row.selected {

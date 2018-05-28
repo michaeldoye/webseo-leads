@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatCheckboxModule, MatDialogModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule, MatBottomSheetModule, MatTooltipModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, MatProgressSpinnerModule, MatProgressBarModule, MatSnackBarModule, MatBadgeModule, MatChipsModule, MatSelectModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
+
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -31,6 +31,7 @@ import { LeadTagsComponent } from './leads/datatable/lead-tags/lead-tags-dialog.
 import { EditLeadComponent } from './leads/datatable/edit-lead/edit-lead-dialog.component';
 import { LeadStatsComponent } from './leads/lead-stats/lead-stats.component';
 import { LeadCountsComponent } from './leads/lead-counts/lead-counts.component';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
@@ -61,33 +62,9 @@ import { LeadCountsComponent } from './leads/lead-counts/lead-counts.component';
     HttpClientModule,
     BrowserAnimationsModule,
     LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatGridListModule,
-    MatCardModule,
-    MatMenuModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
     FlexLayoutModule,
-    MatDialogModule,
-    MatCheckboxModule,
-    MatBottomSheetModule,
-    MatTooltipModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatProgressSpinnerModule,
-    MatProgressBarModule,
-    MatSnackBarModule,
-    MatBadgeModule,
-    MatChipsModule,
-    MatSelectModule,
     ScrollbarModule,
+    MaterialModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   entryComponents: [

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges, SimpleChange, Output, EventEmitter } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource, MatDialog, MatBottomSheet, MatSortable, MatSnackBar, MatIconRegistry } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, MatDialog, MatBottomSheet, MatSortable, MatSnackBar, MatIconRegistry, MatSelectChange } from '@angular/material';
 import { DatatableDataSource } from './datatable-datasource';
 import { DataTableDialogComponent } from './dialog/datatable-dialog.compnent';
 import { DataTableBottomSheet } from './bottom-sheet/data-table-bottom-sheet.component';
@@ -7,9 +7,9 @@ import { LeadTagsComponent } from './lead-tags/lead-tags-dialog.component';
 import { LeadsService, Leads } from '../leads.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { StorageService } from '../../core/storage.service';
-import { Observable, fromEvent, merge, of } from 'rxjs';
-import { mapTo } from 'rxjs/operators';
-
+import { interval } from 'rxjs';
+import { TableCols, TableCol, DefaultCols, DefaultTags } from './datatable-cols.class';
+import * as moment from 'moment'; 
 
 @Component({
   selector: 'datatable',
@@ -20,22 +20,23 @@ export class DatatableComponent implements OnInit, OnChanges {
 
   @Input() shouldRefresh: boolean;
   @Input() tableHeight: string;
+
   @Output() onRefresh = new EventEmitter<boolean>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+
   dataSource: MatTableDataSource<Leads[]>
   allLeads: Array<Leads> = [];
 
-  displayedColumns = ['checkbox', 'id', 'companyName', 'personName', 'emailAddress', 'tags', 'actions'];
-  allTags: Array<any> = ['dev', 'seo', 'ppc', 'social', 'pending', 'to contact', 'needs info', 'is client'];
+  displayedColumns = this.storage.get('tableCols') || new DefaultCols().cols;
+  allcols: TableCol[] = new TableCols().cols;
+  allTags: Array<any> = new DefaultTags().tags;
 
   checkAll: any;
   selectedLeads: Array<number> = [];
 
   isLoading: boolean = false;
-  shouldCloseSnackBar: boolean;
-
   tagFilter: any = '';
 
   constructor(
@@ -52,6 +53,7 @@ export class DatatableComponent implements OnInit, OnChanges {
       let lableIconOff = sanitizer.bypassSecurityTrustResourceUrl('assets/baseline-label_off-24px.svg');
       iconRegistry.addSvgIcon('label', lableIcon);
       iconRegistry.addSvgIcon('label_off', lableIconOff);
+      interval(900000).subscribe(() => this.checkForNewLeads());
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -66,18 +68,10 @@ export class DatatableComponent implements OnInit, OnChanges {
   getTableData(): void {
     this.isLoading = true;
     if (this.api.checkNetworkStatus) {
-
-      this.api.dbGetLeads().subscribe((data: any) => {
-        this.initializeTable(data);
-      }, error => {
-        console.log(error);
-        this.isLoading = false;
-      }); 
-
-    } else {
-
-      this.handleTableOfflineError();
-    }   
+      this.api.dbGetLeads()
+        .subscribe((data: any) => this.initializeTable(data), 
+        error => this.isLoading = false); 
+    } else { this.handleTableOfflineError() }   
   }
 
   private initializeTable(data): void {
@@ -156,29 +150,24 @@ export class DatatableComponent implements OnInit, OnChanges {
     return tags.replace(/['"]+/g, '').split(',');
   }
 
-  removeTag(rowData: Leads, tag: string) {
+  removeTag(rowData: Leads, tag: string): void {
     if (!this.api.checkNetworkStatus) return;
     let alltags = this.getRowTags(rowData.tags);
     let tags = alltags.filter(t => t !== tag);
     this.api.dbAddTagToLead(tags.toString(), rowData.id)
       .subscribe(res => this.getTableData(), error => console.log(error));
-    return false;
   }
-
 
   openTagDialog(rowData: Leads): void {
     if (!this.api.checkNetworkStatus) return;
     let dialogRef = this.dialog.open(LeadTagsComponent, {
-      width: '500px',
+      width: '600px',
       data: {data: rowData}
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.getTableData();
-    });
+    dialogRef.afterClosed().subscribe(() => this.getTableData());
   }
 
-  onTagFilterChange(selected) {
+  onTagFilterChange(selected: MatSelectChange): void {
     if(!selected.value) {
       this.getTableData();
     }
@@ -192,6 +181,32 @@ export class DatatableComponent implements OnInit, OnChanges {
     }
   }
 
+  checkForNewLeads() {
+    const currentLeadCount = this.allLeads.length;
+    this.api.dbGetLeads()
+      .subscribe(data => {
+        let newLeadCount = data.length;
+        if (newLeadCount > currentLeadCount) {
+          let snackRef = this.snackBar.open(
+            'New Lead found',
+            'Refresh Table',
+            {duration: 10000000, horizontalPosition: 'left'}
+          );
+          snackRef.onAction().subscribe(() => this.getTableData());
+        }
+      });
+  }
 
+  onColumnSelect(selected: MatSelectChange) {
+    this.displayedColumns = selected.value;
+    this.storage.set('tableCols', selected.value);
+  }
 
+  getFormattedDateWithTime(date) {
+    return date === '' ? '' : moment(date).format('ddd do MMM HH:mm:ss');
+  }
+
+  getFormattedDate(date) {
+    return date === '' ? '' : moment(date).format('ddd do MMM');
+  }  
 }

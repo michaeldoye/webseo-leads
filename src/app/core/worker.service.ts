@@ -33,7 +33,7 @@ export class WorkerService {
       let snackBarRef = this.snackBar.open(
         'A new version of the dashboard is available', 
         'Update',
-        {duration: 10000000, horizontalPosition: 'left'}
+        {duration: 100000000, horizontalPosition: 'left'}
       );
       snackBarRef.onAction().subscribe(() => document.location.reload());
     }
